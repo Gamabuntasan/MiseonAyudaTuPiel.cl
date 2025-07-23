@@ -1,0 +1,898 @@
+/* Reset y configuración base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-pink: #ff6b9d;
+    --primary-coral: #ff8fab;
+    --dark-gray: #2d2d2d;
+    --light-gray: #f8f8f8;
+    --medium-gray: #666666;
+    --light-border: #e0e0e0;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --white: #ffffff;
+    --black: #000000;
+    --yellow-star: #ffc107;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background-color: var(--white);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Top Banner */
+.top-banner {
+    background-color: var(--dark-gray);
+    color: var(--white);
+    text-align: center;
+    padding: 8px 0;
+    font-size: 14px;
+}
+
+/* Header Principal */
+.main-header {
+    background-color: var(--white);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.main-nav {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 16px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-pink);
+}
+
+.nav-link.dropdown::after {
+    content: '▼';
+    font-size: 10px;
+    margin-left: 8px;
+    opacity: 0.6;
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.header-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    color: var(--text-primary);
+}
+
+.header-actions button:hover {
+    background-color: var(--light-gray);
+}
+
+.k-beauty-banner {
+    background-color: var(--light-gray);
+    text-align: center;
+    padding: 8px 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Hero Banner */
+.hero-banner {
+    background: linear-gradient(135deg, #ff8fab 0%, #ff6b9d 50%, #e91e63 100%);
+    color: var(--white);
+    padding: 60px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-text h1 {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.discount-badge {
+    background-color: var(--white);
+    color: var(--primary-pink);
+    border-radius: 50px;
+    padding: 15px 25px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.discount-percent {
+    font-size: 2rem;
+}
+
+.discount-text {
+    font-size: 1.2rem;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+.hero-image img {
+    max-width: 400px;
+    height: auto;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));
+}
+
+.hero-brands {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.hero-brands img {
+    height: 60px;
+    width: auto;
+    opacity: 0.8;
+    filter: brightness(0) invert(1);
+}
+
+.hero-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.5);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+    background-color: var(--white);
+}
+
+/* Secciones de productos */
+.super-seller, .los-nuevos {
+    padding: 80px 0;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+}
+
+.section-header h2 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.view-all-btn {
+    background-color: var(--light-gray);
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+}
+
+.view-all-btn:hover {
+    background-color: var(--primary-pink);
+    color: var(--white);
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+.product-card {
+    background-color: var(--white);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.product-card img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+}
+
+.product-info {
+    padding: 20px;
+}
+
+.product-brand {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-transform: lowercase;
+}
+
+.product-name {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    height: 50px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.product-rating {
+    margin-bottom: 15px;
+}
+
+.stars {
+    color: var(--yellow-star);
+    font-size: 16px;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.original-price {
+    text-decoration: line-through;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.current-price {
+    color: var(--primary-pink);
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.sold-out {
+    position: relative;
+}
+
+.sold-out-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: var(--dark-gray);
+    color: var(--white);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 10;
+}
+
+/* Sección Crea tu ambiente */
+.ambiente-section {
+    background-color: var(--light-gray);
+    padding: 80px 0;
+}
+
+.ambiente-content {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+}
+
+.ambiente-image img {
+    max-width: 400px;
+    height: auto;
+}
+
+.ambiente-text h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: var(--text-secondary);
+}
+
+.ambiente-text h3 {
+    font-size: 3rem;
+    margin-bottom: 25px;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.ambiente-text p {
+    font-size: 18px;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.comprar-btn {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.comprar-btn:hover {
+    background-color: #e91e63;
+    transform: translateY(-2px);
+}
+
+/* Hair Treatment Banner */
+.hair-treatment-banner {
+    background: linear-gradient(135deg, #f5e6d3 0%, #e8d5c7 100%);
+    padding: 60px 0;
+    margin: 80px 0;
+}
+
+.banner-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.banner-left img {
+    max-width: 200px;
+    height: auto;
+}
+
+.banner-right {
+    flex: 1;
+    padding: 0 40px;
+}
+
+.banner-right h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.banner-right p {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: var(--text-secondary);
+}
+
+.banner-tags {
+    display: flex;
+    gap: 15px;
+}
+
+.banner-tags span {
+    background-color: var(--white);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.banner-model img {
+    max-width: 300px;
+    height: auto;
+}
+
+/* Rutina Skincare */
+.rutina-skincare {
+    padding: 80px 0;
+    text-align: center;
+}
+
+.rutina-skincare h2 {
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    color: var(--text-primary);
+}
+
+.rutina-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+}
+
+.step h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+}
+
+.step-content {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.step-content img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.step-content:hover img {
+    transform: scale(1.05);
+}
+
+.ver-todo-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--dark-gray);
+    color: var(--white);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ver-todo-btn:hover {
+    background-color: var(--primary-pink);
+}
+
+/* Reviews Section */
+.reviews-section {
+    background-color: var(--light-gray);
+    padding: 60px 0;
+}
+
+.reviews-carousel {
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    padding: 20px 0;
+}
+
+.review-card {
+    min-width: 350px;
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.reviewer-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--primary-pink);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.reviewer-details h4 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.verified {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.verified::before {
+    content: '✓';
+    color: green;
+}
+
+.review-rating {
+    color: var(--yellow-star);
+    margin-bottom: 10px;
+}
+
+.review-text {
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.review-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
+}
+
+.review-product {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-top: 15px;
+    border-top: 1px solid var(--light-border);
+}
+
+.review-product img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.review-product span {
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+/* Instagram Section */
+.instagram-section {
+    padding: 80px 0;
+}
+
+.instagram-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 40px;
+}
+
+.instagram-logo {
+    width: 30px;
+    height: 30px;
+}
+
+.instagram-header span {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.instagram-post {
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.instagram-post:hover {
+    transform: scale(1.05);
+}
+
+.instagram-post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Marcas Section */
+.marcas-section {
+    padding: 80px 0;
+    background-color: var(--light-gray);
+}
+
+.marcas-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    color: var(--text-primary);
+}
+
+.marcas-carousel {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.carousel-btn {
+    background-color: var(--white);
+    border: 1px solid var(--light-border);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.carousel-btn:hover {
+    background-color: var(--primary-pink);
+    color: var(--white);
+    border-color: var(--primary-pink);
+}
+
+.marcas-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.marca-item img {
+    max-width: 150px;
+    height: auto;
+    filter: grayscale(100%);
+    transition: filter 0.3s ease;
+}
+
+.marca-item:hover img {
+    filter: grayscale(0%);
+}
+
+/* Footer */
+.footer {
+    background-color: var(--dark-gray);
+    color: var(--white);
+    padding: 60px 0 20px;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.footer-logo img {
+    height: 50px;
+    width: auto;
+    filter: brightness(0) invert(1);
+}
+
+.footer-columns {
+    display: flex;
+    gap: 80px;
+}
+
+.footer-column h4 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column li {
+    margin-bottom: 10px;
+}
+
+.footer-column a {
+    color: #cccccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column a:hover {
+    color: var(--primary-pink);
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    color: #cccccc;
+    transition: color 0.3s ease;
+}
+
+.social-link:hover {
+    color: var(--primary-pink);
+}
+
+.footer-bottom {
+    border-top: 1px solid #444444;
+    padding-top: 20px;
+    text-align: center;
+    color: #cccccc;
+    font-size: 14px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .header-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .main-nav {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-text h1 {
+        font-size: 2.5rem;
+    }
+
+    .section-header {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+
+    .section-header h2 {
+        font-size: 2rem;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .ambiente-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .banner-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .banner-right {
+        padding: 0;
+    }
+
+    .rutina-steps {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+    }
+
+    .reviews-carousel {
+        gap: 20px;
+    }
+
+    .review-card {
+        min-width: 300px;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .footer-columns {
+        gap: 40px;
+    }
+
+    .instagram-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-text h1 {
+        font-size: 2rem;
+    }
+
+    .discount-badge {
+        padding: 10px 20px;
+    }
+
+    .discount-percent {
+        font-size: 1.5rem;
+    }
+
+    .ambiente-text h3 {
+        font-size: 2rem;
+    }
+
+    .banner-right h2 {
+        font-size: 1.8rem;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .review-card {
+        min-width: 280px;
+    }
+
+    .footer-columns {
+        flex-direction: column;
+        gap: 30px;
+    }
+}
