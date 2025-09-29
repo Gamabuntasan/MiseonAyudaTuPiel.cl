@@ -1,737 +1,690 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kosmeticos – Cosmética Coreana en CHILE</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catálogo Miseon</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #fff0f5;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+    header {
+      background: linear-gradient(90deg, #fd5c63 0%, #fcb045 100%);
+      padding: 0.5rem 0 0.5rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px #f8bbd0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .logo-title img {
+      height: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px #f8bbd0;
+    }
+    header h1 {
+      margin: 0;
+      color: #fff;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-shadow: 0 2px 8px #f8bbd0;
+    }
+    nav {
+      background: #fff;
+      box-shadow: 0 2px 8px #f8bbd0;
+      padding: 0.2rem 0;
+      display: flex;
+      justify-content: center;
+      position: sticky;
+      top: 60px;
+      z-index: 9;
+    }
+    .nav-container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+    }
+    .nav-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      gap: 1.5rem;
+      transition: max-height 0.3s;
+    }
+    nav a {
+      display: block;
+      padding: 0.7rem 1.2rem;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #d63384;
+      font-weight: bold;
+      font-size: 1.05rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      background: linear-gradient(90deg, #fd5c63 0%, #fcb045 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px #f8bbd0;
+    }
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      z-index: 20;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 28px;
+      height: 4px;
+      margin: 4px 0;
+      background: #d63384;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+    @media (max-width: 800px) {
+      .nav-container {
+        flex-direction: row;
+        padding: 0 1rem;
+      }
+      .nav-links {
+        flex-direction: column;
+        gap: 0;
+        background: #fff;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        box-shadow: 0 2px 8px #f8bbd0;
+      }
+      .nav-links.open {
+        max-height: 400px;
+        border-radius: 0 0 12px 12px;
+        padding-bottom: 0.5rem;
+      }
+      .nav-links li {
+        border-bottom: 1px solid #f8bbd0;
+      }
+      .nav-toggle {
+        display: flex;
+      }
+    }
+    .section {
+      padding: 1rem;
+    }
+    .section h2 {
+      color: #d63384;
+    }
+    .product {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #f8bbd0;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+      transition: box-shadow 0.2s;
+    }
+    .product:hover {
+      box-shadow: 0 4px 16px #f06292;
+    }
+    .product-info {
+      flex: 1;
+    }
+    .product-desc {
+      color: #d63384;
+      font-size: 0.98rem;
+      margin-top: 0.5rem;
+      background: #fff0f5;
+      border-left: 3px solid #d63384;
+      padding: 0.5rem 1rem;
+      border-radius: 0 8px 8px 0;
+    }
+    .proximamente {
+      opacity: 0.7;
+      background: #ffe4e1;
+      border: 1.5px dashed #d63384;
+      box-shadow: none;
+    }
+    .proximamente .product-desc {
+      color: #b71c1c;
+      background: #fff8f8;
+      border-left: 3px solid #b71c1c;
+    }
+    .proximamente h3 {
+      color: #b71c1c;
+    }
+    .proximamente .price {
+      color: #b71c1c;
+    }
+    .proximamente .stock {
+      color: #b71c1c;
+    }
+    .proximamente .ref-price {
+      color: #b71c1c;
+    }
+    .btn-instagram {
+      background: linear-gradient(90deg, #fd5c63 0%, #fcb045 100%);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      font-weight: bold;
+      margin: 1rem 0;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #f8bbd0;
+      transition: background 0.2s;
+    }
+    .btn-instagram:hover {
+      background: linear-gradient(90deg, #fcb045 0%, #fd5c63 100%);
+    }
+    .condiciones {
+      background: #fff8f8;
+      border: 1.5px solid #d63384;
+      border-radius: 12px;
+      margin: 2rem auto 1rem auto;
+      max-width: 700px;
+      padding: 1.5rem 2rem;
+      color: #b71c1c;
+      font-size: 1.05rem;
+      box-shadow: 0 2px 8px #f8bbd0;
+    }
+    .product img {
+      max-width: 100px;
+      border-radius: 8px;
+      display: block;
+    }
+    .price {
+      color: #333;
+      font-weight: bold;
+    }
+    footer {
+      background-color: #ffb6c1;
+      color: white;
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  </style>
 </head>
 <body>
-    <!-- Header superior -->
-    <div class="top-banner">
-        <p></p>
+  <header>
+    <div class="logo-title">
+      <!-- Si tienes un logo, reemplaza el src por la ruta de tu logo -->
+      <!-- <img src="Img/skincare/Logotipo.png" alt="Logo Miseon"> -->
+      <h1>Catálogo Miseon</h1>
+    </div>
+  </header>
+  <nav>
+    <div class="nav-container">
+      <button class="nav-toggle" aria-label="Abrir menú" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#limpiadores">Limpiadores</a></li>
+        <li><a href="#cremas">Cremas</a></li>
+        <li><a href="#bloqueadores">Bloqueadores</a></li>
+        <li><a href="#tonicos">Tónicos</a></li>
+        <li><a href="#serums">Serums</a></li>
+        <li><a href="#mascarillas">Mascarillas</a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+    <div class="product">
+      <img src="Img/skincare/Retinol 0.2 Boosting Shot Ampoule.png" alt="Retinol 0.2 Boosting Shot Ampoule">
+      <div class="product-info">
+        <h3>Retinol 0.2 Boosting Shot Ampoule</h3>
+        <p class="price">$32.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Retinol%200.2%20Boosting%20Shot%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Poremizing Fresh Ampoule.png" alt="Poremizing Fresh Ampoule">
+      <div class="product-info">
+        <h3>Poremizing Fresh Ampoule</h3>
+        <p class="price">$30.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Poremizing%20Fresh%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Niacinamide 10 TXA 4 Serum for Brightening and Dark Spots.png" alt="Niacinamide 10 TXA 4 Serum for Brightening and Dark Spots">
+      <div class="product-info">
+        <h3>Niacinamide 10 TXA 4 Serum for Brightening and Dark Spots</h3>
+        <p class="price">$38.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Niacinamide%2010%20TXA%204%20Serum%20for%20Brightening%20and%20Dark%20Spots" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Niacinamide 10 Boosting Shot Ampoule.png" alt="Niacinamide 10 Boosting Shot Ampoule">
+      <div class="product-info">
+        <h3>Niacinamide 10 Boosting Shot Ampoule</h3>
+        <p class="price">$28.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Niacinamide%2010%20Boosting%20Shot%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/MIXSOON Bean Essence 50ml.png" alt="MIXSOON Bean Essence 50ml">
+      <div class="product-info">
+        <h3>MIXSOON Bean Essence 50ml</h3>
+        <p class="price">$40.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=MIXSOON%20Bean%20Essence%2050ml" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Matrixyl 10 Boosting Shot Ampoule.png" alt="Matrixyl 10 Boosting Shot Ampoule">
+      <div class="product-info">
+        <h3>Matrixyl 10 Boosting Shot Ampoule</h3>
+        <p class="price">$26.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Matrixyl%2010%20Boosting%20Shot%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+          <div class="product">
+            <img src="Img/skincare/Beauty of Joseon - Sérum Facial Revive Serum (30ml).png" alt="Beauty of Joseon Revive Serum">
+            <div class="product-info">
+              <h3>Beauty of Joseon - Sérum Facial Revive Serum (30ml)</h3>
+              <p class="price">$26.000 CLP</p>
+              <p class="stock">Stock disponible: 1 unidades</p>
+              <p class="ref-price">Precio referencial: $27.990 CLP</p>
+              <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Sérum%20Facial%20Revive%20Serum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+              <div class="product-desc">
+                ¡Este producto ya está disponible y puedes solicitarlo!
+              </div>
+            </div>
+          </div>
+    <div class="product">
+      <img src="Img/skincare/Beauty of Joseon - Sérum aclarante Glow Deep Serum (30ml).png" alt="Glow Deep Serum">
+      <div class="product-info">
+        <h3>Beauty of Joseon - Sérum aclarante Glow Deep Serum (30ml)</h3>
+        <p class="price">$26.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Sérum%20aclarante%20Glow%20Deep%20Serum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Purito SEOUL - Sérum Wonder Releaf Centella Serum Unscented (60ml).png" alt="Purito Wonder Releaf Centella">
+      <div>
+        <h3>Purito SEOUL - Sérum Wonder Releaf Centella Serum Unscented (60ml)</h3>
+        <p class="price">$28.000 CLP</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <p class="ref-price">Precio referencial: $30.000 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Purito%20SEOUL%20-%20Sérum%20Wonder%20Releaf%20Centella%20Serum%20Unscented%20(60ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Beauty of Joseon - Glow Sérum (30ml).png" alt="Glow Serum">
+      <div class="product-info">
+        <h3>Beauty of Joseon - Glow Sérum (30ml)</h3>
+        <p class="price">$26.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Glow%20Sérum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/SKIN 1004 - Sérum Facial Iluminador Madagascar Centella Tone Brightening Capsule Ampoule Jumbo (100ml).png" alt="Tone Brightening Capsule">
+      <div>
+        <h3>SKIN 1004 - Sérum Facial Iluminador Madagascar Centella Tone Brightening Capsule Ampoule Jumbo (100ml)</h3>
+        <p class="price">$32.000 CLP</p>
+        <p class="stock">Stock disponible: 1 unidades</p>
+        <p class="ref-price">Precio referencial: $35.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Sérum%20Facial%20Iluminador%20Madagascar%20Centella%20Tone%20Brightening%20Capsule%20Ampoule%20Jumbo%20(100ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml).png" alt="Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml)">
+      <div>
+        <h3>Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml)</h3>
+        <p class="price">$10.000</p>
+        <p class="stock">Stock disponible: 5 unidades</p>
+        <p class="ref-price">Precio referencial: $15.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Purito%20SEOUL%20-%20Sérum%20sin%20fragancia%20Centella%20Unscented%20Serum%20MINI%20(15ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Beauty of Joseon - Set Hanbang Serum Discovery (10ml x 4 uds.).png" alt="Beauty of Joseon - Set Hanbang Serum Discovery (10ml x 4 uds.)">
+      <div>
+        <h3>Beauty of Joseon - Set Hanbang Serum Discovery (15ml x 4 uds.) Por separado (Opcion) </h3>
+        <p class="price">$40.000</p>
+        <p class="stock">Stock disponible: 4 unidades</p>
+        <p class="ref-price">Precio referencial: $50.000 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Set%20Hanbang%20Serum%20Discovery%20(15ml%20x%204%20uds.)%20Por%20separado%20(Opcion)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+  </div>
+</div>
+    <div class="product">
+       <img src="Img/skincare/celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml).png" alt="celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml)">
+       <div>
+         <h3>celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml)</h3>
+         <p class="price">$22.000</p>
+         <p class="stock">Stock disponible: 2 unidades</p>
+         <p class="ref-price">Precio referencial: $27.990 CLP</p>
+         <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=celimax%20-%20Sérum%20Iluminador%20Pore%20+%20Dark%20Spot%20Brightening%20Serum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+    </div>
+  </div>
+<div>
+  
+
+  <div class="section" id="tonicos">
+    <h2>Tónicos</h2>
+    <div class="product">
+      <img src="Img/skincare/Anua - Tónico Facial con Arroz y Niacinamida Rice 70 Glow Milky Toner Mini (40ml).png" alt="Anua Toner">
+      <div class="product-info">
+        <h3>Anua - Tónico Facial con Arroz y Niacinamida Rice 70 Glow Milky Toner Mini (40ml)</h3>
+        <p class="price">$13.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $15.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Anua%20-%20Tónico%20Facial%20con%20Arroz%20y%20Niacinamida%20Rice%2070%20Glow%20Milky%20Toner%20Mini%20(40ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Beauty of Joseon - Tónico Glow Replenishing Rice Milk (150ml).png" alt="Tónico Rice Milk">
+      <div class="product-info">
+        <h3>Beauty of Joseon - Tónico Glow Replenishing Rice Milk (150ml)</h3>
+        <p class="price">$26.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $29.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Tónico%20Glow%20Replenishing%20Rice%20Milk%20(150ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/Isntree - Tónico con ácido hialurónico MINI (20ml).png" alt="Isntree - Tónico con ácido hialurónico MINI (20ml)">
+      <div>
+        <h3>Isntree - Tónico con ácido hialurónico MINI (20ml)</h3>
+        <p class="price">$5.000</p>
+        <p class="stock">Stock disponible: 1 unidades</p>
+        <p class="ref-price">Precio referencial: $8.000 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Isntree%20-%20Tónico%20con%20ácido%20hialurónico%20MINI%20(20ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml).png" alt="SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml)">
+      <div>
+        <h3>SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml)</h3>
+        <p class="price">$26.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <p class="ref-price">Precio referencial: $30.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Bruma%20Madagascar%20Centella%20Hyalu-Cica%20Cloudy%20Mist%20(120ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="bloqueadores">
+    <h2>Bloqueadores</h2>
+    <div class="product">
+      <img src="Img/skincare/TOCOBO - Protector Solar Algodón Suave Cotton Soft Sun Stick (19g).png" alt="TOCOBO Cotton Soft Sun Stick">
+      <div class="product-info">
+        <h3>TOCOBO - Protector Solar Algodón Suave Cotton Soft Sun Stick (19g)</h3>
+        <p class="price">$21.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=TOCOBO%20-%20Protector%20Solar%20Algodón%20Suave%20Cotton%20Soft%20Sun%20Stick%20(19g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/mixsoon - Protector Solar Centella Sun Cream (50g).png" alt="Mixsoon Sun Cream">
+      <div class="product-info">
+        <h3>mixsoon - Protector Solar Centella Sun Cream (50g)</h3>
+        <p class="price">$24.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=mixsoon%20-%20Protector%20Solar%20Centella%20Sun%20Cream%20(50g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/TOCOBO - Cica Cooling Sun Stick (18g).png" alt="Tocobo Cica Cooling">
+      <div class="product-info">
+        <h3>TOCOBO - Cica Cooling Sun Stick (18g)</h3>
+        <p class="price">$24.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=TOCOBO%20-%20Cica%20Cooling%20Sun%20Stick%20(18g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+  <img src="Img/skincare/TOCOBO - Protector Solar Cica Calming Sun Serum.png" alt="TOCOBO - Protector Solar Cica Calming Sun Serum">
+  <div>
+    <h3>TOCOBO - Protector Solar Cica Calming Sun Serum</h3>
+    <p class="price">$24.000</p>
+    <p class="stock">Stock disponible: 4 unidades</p>
+    <p class="ref-price">Precio referencial: $27.990 CLP</p>
+    <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=TOCOBO%20-%20Protector%20Solar%20Cica%20Calming%20Sun%20Serum" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+  </div>
+</div>
+<div class="product">
+  <img src="Img/skincare/SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml).png" alt="SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml)">
+  <div>
+    <h3>SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml)</h3>
+    <p class="price">$21.000</p>
+    <p class="stock">Stock disponible: 7 unidades</p>
+    <p class="ref-price">Precio referencial: $27.990 CLP</p>
+    <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Protector%20Solar%20Madagascar%20Centella%20Hyalu-Cica%20Water-Fit%20Sun%20Serum%20(50ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+  </div>
+</div>
+
+    <div class="product">
+      <img src="Img/skincare/SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml).png" alt="SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml)">
+      <div>
+        <h3>SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml)</h3>
+        <p class="price">$22.000</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Madagascar%20Centella%20Probio-Cica%20Glow%20Sun%20Ampoule%20(50ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="mascarillas">
+    <h2>Mascarillas</h2>
+    <div class="product">
+      <img src="Img/skincare/Beauty of Joseon - Mascarilla Facial Ground Rice and Honey Glow Mask (150ml).png" alt="Mascarilla Rice and Honey">
+      <div class="product-info">
+        <h3>Beauty of Joseon - Mascarilla Facial Ground Rice and Honey Glow Mask (150ml)</h3>
+        <p class="price">$25.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Mascarilla%20Facial%20Ground%20Rice%20and%20Honey%20Glow%20Mask%20(150ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g).png" alt="SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g)">
+      <div>
+        <h3>SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g)</h3>
+        <p class="price">$25.000 CLP</p>
+        <p class="stock">Stock disponible: 3 unidades</p>
+        <p class="ref-price">Precio referencial: $29.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Mascarilla%20de%20Arcilla%20Madagascar%20Centella%20Poremizing%20Quick%20Clay%20Stick%20Mask%20(27g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="section" id="limpiadores">
+    <h2>Limpiadores</h2>
+    <div class="product">
+      <img src="Img/skincare/mixsoon - Bean Cleansing Oil (100ml).png" alt="Bean Cleansing">
+      <div class="product-info">
+        <h3>mixsoon - Bean Cleansing Oil (100ml)</h3>
+        <p class="price">$25.000 CLP</p>
+        <p class="stock">Próximamente</p>
+        <p class="ref-price">Precio referencial: $27.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=mixsoon%20-%20Bean%20Cleansing%20Oil%20(100ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml).png" alt="mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml)">
+      <div>
+        <h3>mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml)</h3>
+        <p class="price">$12.000</p>
+        <p class="stock">Stock disponible: 1 unidades</p>
+        <p class="ref-price">Precio referencial: $15.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=mixsoon%20-%20Aceite%20Limpiador%20Bean%20Cleansing%20Oil%20Mini%20(20ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
     </div>
 
-    <!-- Navegación principal -->
-    <header class="main-header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="Img/skincare/Imagen Portada Pagina.jpg" alt="Miseon.cl" class="logo-img">
-                </div>
+  </div> <!-- Aquí CIERRA el primer producto -->
+    <div class="product">
+      <img src="Img/skincare/SKIN 1004 - Espuma Limpiadora Madagascar Centella Poremizing Deep Cleansing Foam (125ml).png" alt="SKIN1004 Deep Foam">
+      <div>
+        <h3>SKIN 1004 - Espuma Limpiadora Madagascar Centella Poremizing Deep Cleansing Foam (125ml)</h3>
+        <p class="price">$20.000 CLP</p>
+        <p class="stock">Stock disponible: 2 unidades</p>
+        <p class="ref-price">Precio referencial: $22.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Espuma%20Limpiadora%20Madagascar%20Centella%20Poremizing%20Deep%20Cleansing%20Foam%20(125ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
 
-                <nav class="main-nav">
-                    <a href="#" class="nav-link">Home</a>
-                    <a href="#" class="nav-link">Nuevo</a>
-                    <a href="#" class="nav-link dropdown">Skincare</a>
-                    <a href="#" class="nav-link dropdown">Exclusivo</a>
-                    <a href="#" class="nav-link">Marcas</a>
-                </nav>
 
-                <div class="header-actions">
-                    <button class="search-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="11" cy="11" r="8"></circle>
-                            <path d="m21 21-4.35-4.35"></path>
-                        </svg>
-                    </button>
-                    <button class="user-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </button>
-                    <button class="cart-btn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z"></path>
-                            <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z"></path>
-                            <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
+      </div>
+    </div>
+    <div class="product">
+      <img src="Img/skincare/haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml).png" alt="haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml)">
+      <div>
+        <h3>haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml)</h3>
+        <p class="price">$19.000 CLP</p><p class="stock">Stock disponible: 4 unidades</p>
+        <p class="ref-price">Precio referencial: $22.990 CLP</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=haruharu%20wonder%20-%20Gel%20Limpiador%20Black%20Rice%20Moisture%205.5%20Soft%20Cleansing%20Gel%20(100ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
 
-        <div class="k-beauty-banner">
-            <span>K-Beauty </span>
-        </div>
-    </header>
 
-    <!-- Hero Banner -->
-    <section class="hero-banner">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1> Productos coreanos seleccionados con amor </h1>
+      </div>
+    </div>
+  </div>
 
-                    <p class="hero-subtitle">todos los productos</p>
-                </div>
-                <div class="hero-image">
-                    <img src="Img/skincare/Imagen Promocional.jpg" alt="Lip Festival Products">
-                </div>
+  <div class="product">
+    <img src="Img/skincare/SKIN 1004 - Crema Facial Madagascar Centella Poremizing Light Gel Cream (75ml).png" alt="Gel Cream">
+    <div class="product-info">
+      <h3>SKIN 1004 - Crema Facial Madagascar Centella Poremizing Light Gel Cream (75ml)</h3>
+      <p class="price">$26.000 CLP</p>
+      <p class="stock">Stock disponible: 2 unidades</p>
+      <p class="ref-price">Precio referencial: $27.990 CLP</p>
+      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20Facial%20Madagascar%20Centella%20Poremizing%20Light%20Gel%20Cream%20(75ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
 
-            </div>
-        </div>
-        <div class="hero-indicators">
-            <span class="indicator active"></span>
-            <span class="indicator"></span>
-            <span class="indicator"></span>
-            <span class="indicator"></span>
-        </div>
-    </section>
+    </div>
+  </div>
+  <div class="product">
+    <img src="Img/skincare/SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml).png" alt="SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml)">
+    <div class="product-info">
+      <h3>SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml)</h3>
+      <p class="price">$24.000 CLP</p>
+      <p class="stock">Stock disponible: 2 unidades</p>
+      <p class="ref-price">Precio referencial: $27.990 CLP</p>
+      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20Madagascar%20Centella%20Soothing%20Cream%20(75ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+    </div>
+  </div>
+  <div class="product">
+    <img src="Img/skincare/SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml).png" alt="SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml)">
+    <div class="product-info">
+      <h3>SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml)</h3>
+      <p class="price">$13.000 CLP</p>
+      <p class="stock">Stock disponible: 1 unidades</p>
+      <p class="ref-price">Precio referencial: $15.990 CLP</p>
+      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20Hidratante%20con%20Centella%20Asiática%20Madagascar%20Centella%20Soothing%20Cream%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+    </div>
+  </div>
+  <div class="product">
+    <img src="Img/skincare/SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml).png" alt="SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml)">
+    <div class="product-info">
+      <h3>SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml)</h3>
+      <p class="price">$28.000</p>
+      <p class="stock">Stock disponible: 2 unidades</p>
+      <p class="ref-price">Precio referencial: $35.990 CLP</p>
+      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20con%20Centella%20Asiática%20Madagascar%20Centella%20Probio-Cica%20Enrich%20Cream%20(50ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+    </div>
+  </div>
 
-    <!-- Super Seller Section -->
-    <section class="super-seller">
-        <div class="container">
-            <div class="section-header">
-                <h2>Super Precios</h2>
-                <button class="view-all-btn">Ver Aquí</button>
-            </div>
+  </div>
+  <div class="product">
+    <img src="Img/skincare/SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml).png" alt="SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml)">
+    <div class="product-info">
+      <h3>SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml)</h3>
+      <p class="price">$21.000</p>
+      <p class="stock">Stock disponible: 6 unidades</p>
+      <p class="ref-price">Precio referencial: $27.990 CLP</p>
+      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20de%20Ojos%20Madagascar%20Centella%20Probio-Cica%20Bakuchiol%20(20ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+    </div>
+  </div>
+    <div class="section" id="Cremas">
+    <div class="product">
+      <img src="Img/skincare/Serum Contorno de Ojos Manchas, Ojeras y ArrugasOjeras – Zona Oscura Con Acido Tranexamico y Glutatión -TRANEXAMIC ACID + GLUTATHIONE EYE CREAM – MARY & MAY .png" alt="Tranexamic Acid + Glutathione Eye Cream (Mary & May)">
+      <div class="product-info">
+        <h3>Tranexamic Acid + Glutathione Eye Cream (Mary & May)</h3>
+        <p class="price">$13.000</p>
+        <p class="stock">Stock disponible: 4 unidades</p>
+        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Tranexamic%20Acid%20+%20Glutathione%20Eye%20Cream%20(Mary%20%26%20May)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+      </div>
+    </div>
 
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="Img/skincare/TOCOBO Calamine Pore Control Cleansing Oil.png" alt="Peripera Tinta Ink Velvet">
-                    <div class="product-info">
-                        <p class="product-brand">TOCOBO</p>
-                        <h3 class="product-name">TOCOBO Calamine Pore Control Cleansing Oil»</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="original-price">$35.000</span>
-                            <span class="current-price">$25.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/Beauty of Joseon - Mascarilla Facial Ground Rice and Honey Glow Mask (150ml).png" alt="Romnd Tinta Juicy Lasting Tint">
-                    <div class="product-info">
-                        <p class="product-brand">Beauty of Joseon</p>
-                        <h3 class="product-name">Beauty of Joseon - Mascarilla Facial Ground Rice and Honey Glow Mask (150ml)»</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="original-price">$26.000</span>
-                            <span class="current-price">$20.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g).png" alt="SNP Mascarilla Peptaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN1004</p>
-                        <h3 class="product-name">SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g)»</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$22.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/Isntree - Tónico con ácido hialurónico MINI (20ml).png" alt="Peripera Tinta Ink Airy Velvet">
-                    <div class="product-info">
-                        <p class="product-brand">Isntree</p>
-                        <h3 class="product-name">Isntree - Tónico con ácido hialurónico MINI (20ml)»</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="original-price">$12.000</span>
-                            <span class="current-price">$5.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card sold-out">
-                    <div class="sold-out-badge">Stock 5</div>
-                    <img src="Img/skincare/Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml).png" alt="SNP Mascarilla Cicaronic Daily Mask">
-                    <div class="product-info">
-                        <p class="product-brand">Purito SEOUL</p>
-                        <h3 class="product-name">Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml)»</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$10.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">mixsoon</p>
-                        <h3 class="product-name">mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml)»</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$12.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/mixsoon - Centella Cleansing Foam.png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">mixsoon</p>
-                        <h3 class="product-name">mixsoon - Centella Cleansing Foam (150ml)»</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$20.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">skincare/SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$28.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/Beauty of Joseon - Tónico Glow Replenishing Rice Milk (150ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">Beauty of Joseon</p>
-                        <h3 class="product-name">Beauty of Joseon - Tónico Glow Replenishing Rice Milk (150ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$26.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$28.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/TOCOBO - Cica Cooling Sun Stick (18g).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">TOCOBO</p>
-                        <h3 class="product-name">TOCOBO - Cica Cooling Sun Stick (18g)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$20.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/TOCOBO - Protector Solar Algodón Suave Cotton Soft Sun Stick (19g).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">TOCOBO</p>
-                        <h3 class="product-name">TOCOBO - Protector Solar Algodón Suave Cotton Soft Sun Stick (19g)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$20.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/TOCOBO - Protector Solar Cica Calming Sun Serum.png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">TOCOBO</p>
-                        <h3 class="product-name">TOCOBO - Protector Solar Cica Calming Sun Serum</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$20.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$21.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$20.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$21.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Crema Facial Madagascar Centella Poremizing Light Gel Cream (75ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Crema Facial Madagascar Centella Poremizing Light Gel Cream (75ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$21.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$13.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Crema Facial Madagascar Centella Probio-Cica Enrich Cream Mini (15ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Crema Facial Madagascar Centella Probio-Cica Enrich Cream Mini (15ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$8.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$21.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/MACQUEEN - Bálsamo facial Collagen Vita Wrinkle Multi Balm (10g).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">MACQUEEN</p>
-                        <h3 class="product-name">MACQUEEN - Bálsamo facial Collagen Vita Wrinkle Multi Balm (10g)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$15.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/mixsoon - Protector Solar Centella Sun Cream (50g).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">mixsoon</p>
-                        <h3 class="product-name">mixsoon - Protector Solar Centella Sun Cream (50g)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$20.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Sérum Facial Iluminador Madagascar Centella Tone Brightening Capsule Ampoule Jumbo (100ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Sérum Facial Iluminador Madagascar Centella Tone Brightening Capsule Ampoule Jumbo (100ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$32.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/celimax - Ampolla Facial Noni Ampoule Calming + Radiance 2024 Version (30ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">celimax</p>
-                        <h3 class="product-name">celimax - Ampolla Facial Noni Ampoule Calming + Radiance 2024 Version (30ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$24.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/Beauty of Joseon - Set Hanbang Serum Discovery (10ml x 4 uds.).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">Beauty of Joseon</p>
-                        <h3 class="product-name">Beauty of Joseon - Set Hanbang Serum Discovery (10ml x 4 uds.)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$40.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">celimax</p>
-                        <h3 class="product-name">celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$22.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/Anua - Tónico Facial con Arroz y Niacinamida Rice 70 Glow Milky Toner Mini (40ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">Anua</p>
-                        <h3 class="product-name">Anua - Tónico Facial con Arroz y Niacinamida Rice 70 Glow Milky Toner Mini (40ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$12.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/Purito SEOUL - Sérum Wonder Releaf Centella Serum Unscented (60ml).png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">Purito SEOUL</p>
-                        <h3 class="product-name">Purito SEOUL - Sérum Wonder Releaf Centella Serum Unscented (60ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$28.000</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="Img/skincare/Madagascar Centella Silky-Fit Sun Stick (SKIN1004) - 20gr.png" alt="SNP Mascarilla Vitaronic Ampoule Mask">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN1004</p>
-                        <h3 class="product-name">skincare/Madagascar Centella Silky-Fit Sun Stick (SKIN1004) - 20gr</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$21.000</span>
-                        </div>
-                    </div>
+  </div>
+</div>
+   <h3 style="color:#d63384; margin-top:0;">Condiciones para productos "Próximamente"</h3>
+  <div class="condiciones">
  
+    <ul style="margin:0 0 0 1.2em; padding:0;">
+      <li>El producto estará disponible en un plazo estimado de 1 mes.</li>
+      <li>Para reservar, se requiere un abono del 50% del valor.</li>
+      <li>La información sobre el estado del pedido será clara y transparente en todo momento.</li>
+      <li>Ofrecemos rastreo y acompañamiento personalizado durante todo el proceso.</li>
+    </ul>
+  </div>
 
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-    
-
-    <!-- Crea tu ambiente section -->
-    <section class="ambiente-section">
-        <div class="container">
-            <div class="ambiente-content">
-                <div class="ambiente-image">
-                    <img src="Img/skincare/Imagen Portada Pagina.jpg" alt="Cozy Cotton">
-                </div>
-                <div class="ambiente-text">
-                    <h3>Miseon.cl</h3>
-                    <p>"🌿 Crea tu ambiente con Miseon.cl
-En Miseon creemos en los detalles que reconfortan.
-Disfruta de una fragancia suave y envolvente, con notas de algodón fresco, rosa delicada y sándalo cálido.
-✨ Perfecta para quienes buscan calma, elegancia y un toque especial en su espacio.
-Confía en nosotros, cada producto es 100% original y elegido con cariño."</p>
-                    
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Los Nuevos section -->
-    <section class="los-nuevos">
-        <div class="container">
-            <div class="section-header">
-                <h2>Los Nuevos</h2>
-                <button class="view-all-btn">Revisa Aquí</button>
-            </div>
-
-            <div class="products-grid">
-                <div class="product-card">
-                    <img src="Img/skincare/Beauty of Joseon - Glow Sérum (30ml).png" alt="Mixsoon Centella Peptide">
-                    <div class="product-info">
-                        <p class="product-brand">Beauty of Joseon</p>
-                        <h3 class="product-name">Beauty of Joseon - Glow Sérum (30ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$26.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/Beauty of Joseon - Sérum aclarante Glow Deep Serum (30ml).png" alt="Centella24 Patches">
-                    <div class="product-info">
-                        <p class="product-brand">Beauty of Joseon</p>
-                        <h3 class="product-name">Beauty of Joseon - Sérum aclarante Glow Deep Serum (30ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$26.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/Beauty of Joseon - Sérum Facial Revive Serum (30ml).png" alt="SKIN1004 Crema">
-                    <div class="product-info">
-                        <p class="product-brand">Beauty of Joseon</p>
-                        <h3 class="product-name">Beauty of Joseon - Sérum Facial Revive Serum (30ml)"</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$26.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/mixsoon - Bean Cleansing Oil (100ml).png" alt="Beauty Of Joseon Dynasty Cream">
-                    <div class="product-info">
-                        <p class="product-brand">mixsoon</p>
-                        <h3 class="product-name">mixsoon - Bean Cleansing Oil (100ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$21.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml).png" alt="Peripera Tinta Ink Mood">
-                    <div class="product-info">
-                        <p class="product-brand">haruharu wonder</p>
-                        <h3 class="product-name">haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="original-price">$22.000</span>
-                            <span class="current-price">$17.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/SKIN 1004 - Espuma Limpiadora Madagascar Centella Poremizing Deep Cleansing Foam (125ml).png" alt="Beauty Of Joseon Limpiador">
-                    <div class="product-info">
-                        <p class="product-brand">SKIN 1004</p>
-                        <h3 class="product-name">SKIN 1004 - Espuma Limpiadora Madagascar Centella Poremizing Deep Cleansing Foam (125ml)</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$19.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/Imagen Promocional.jpg" alt="Beauty Of Joseon Protector">
-                    <div class="product-info">
-                        <p class="product-brand">💖 Pack Miseon – Hidratación & Limpieza Coreana 💖
-Incluye:
-
-🧴 SKIN1004 - Madagascar Centella Soothing Cream (30 ml)
-Crema hidratante con centella asiática que calma, protege y fortalece la piel sensible.
-
-🫘 Mixsoon - Bean Cleansing Oil Mini (20 ml)
-Aceite limpiador nutritivo que elimina maquillaje e impurezas sin resecar.
-
-🍚 Haruharu Wonder - Black Rice Moisture 5.5 Soft Cleansing Gel (100 ml)
-Gel limpiador suave con arroz negro fermentado. Limpieza profunda sin irritación.</p>
-                        <h3 class="product-name">🎁 Promo exclusiva en Miseon:
-
-</h3>
-                        <div class="product-rating">
-                            <span class="stars">★★★★★</span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price">$40.000</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="product-card">
-                    <img src="Img/skincare/Imagen Calma tu piel.jpg" alt="Beauty Of Joseon Serum">
-                    <div class="product-info">
-                        <p class="product-brand">🌸 Tu piel también merece amor 🌸
-Dedica unos minutos al día solo para ti.
-El cuidado coreano no es solo una rutina,
-es un acto de cariño, paciencia y constancia.
-✨ Día a día, tu piel te lo va a agradecer.
-Confía en el proceso… y en ti. 💖</p>
-                        <h3 class="product-name"></h3>
-                        <div class="product-rating">
-                            <span class="stars"></span>
-                        </div>
-                        <div class="product-price">
-                            <span class="current-price"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hair Treatment Banner -->
-    <section class="hair-treatment-banner">
-        <div class="container">
-            <div class="banner-content">
-                <div class="banner-left">
-                    <img src="Img/skincare/SKIN 1004-Detalle.png" alt="Hair Essence Oil">
-                </div>
-                <div class="banner-right">
-                    <h2>Tratamiento Facial “Essence Serum”</h2>
-                    <p>Formulado con ingredientes naturales y aroma delicado para ofrecer un cuidado profundo y revitalizante a tu piel.</p>
-                    <div class="banner-tags">
-                        <span>Nutrición</span>
-                        <span>Fragancia</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Rutina Skincare section -->
-    <section class="rutina-skincare">
-        <div class="container">
-            <h2>Rutina Skincare Coreana</h2>
-
-            <div class="rutina-steps">
-                <div class="step">
-                    <h3>Paso 1</h3>
-                    <div class="step-content">
-                        <img src="Img/skincare/mixsoon - Bean Cleansing Oil (100ml).png" alt="Paso 1">
-                        <button class="ver-todo-btn">VER TODO</button>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <h3>Paso 2</h3>
-                    <div class="step-content">
-                        <img src="Img/skincare/mixsoon - Centella Cleansing Foam.png" alt="Paso 2">
-                        <button class="ver-todo-btn">VER TODO</button>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <h3>Paso 3</h3>
-                    <div class="step-content">
-                        <img src="Img/skincare/SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml).png" alt="Paso 3">
-                        <button class="ver-todo-btn">VER TODO</button>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <h3>Paso 4</h3>
-                    <div class="step-content">
-                        <img src="Img/skincare/SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml).png" alt="Paso 4">
-                        <button class="ver-todo-btn">VER TODO</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-   
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-
-                <div class="footer-columns">
-                    <div class="footer-column">
-                        <h4>Contacto</h4>
-                        <ul>
-                            <li><a href="#">Contacto</a></li>
-                            
   <footer>
     <p>Sigue nuestro Instagram @miseon.cl | Contáctanos por WhatsApp</p>
     <a href="https://www.instagram.com/miseon.cl?igsh=d2s0N3RsOXRmZml5" target="_blank">
-  <button class="btn-instagram">Síguenos en Instagram</button>
-</a>
+      <button class="btn-instagram">Síguenos en Instagram</button>
+    </a>
 
-            <div class="footer-bottom">
-                <p>Copyright © 2025 Importadora Tetra-C Chile Limitada. All Rights Reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script type="module" src="/src/main.ts"></script>
+  </footer>
 </body>
 </html>
