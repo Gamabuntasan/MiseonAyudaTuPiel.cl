@@ -1,692 +1,942 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catálogo Miseon</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background-color: #fff0f5;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-    }
-    header {
-      background: linear-gradient(90deg, #fd5c63 0%, #fcb045 100%);
-      padding: 0.5rem 0 0.5rem 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 2px 8px #f8bbd0;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    .logo-title {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-    .logo-title img {
-      height: 40px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px #f8bbd0;
-    }
-    header h1 {
-      margin: 0;
-      color: #fff;
-      font-size: 2rem;
-      letter-spacing: 2px;
-      font-weight: 700;
-      text-shadow: 0 2px 8px #f8bbd0;
-    }
-    nav {
-      background: #fff;
-      box-shadow: 0 2px 8px #f8bbd0;
-      padding: 0.2rem 0;
-      display: flex;
-      justify-content: center;
-      position: sticky;
-      top: 60px;
-      z-index: 9;
-    }
-    .nav-container {
-      width: 100%;
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: relative;
-    }
-    .nav-links {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      gap: 1.5rem;
-      transition: max-height 0.3s;
-    }
-    nav a {
-      display: block;
-      padding: 0.7rem 1.2rem;
-      border-radius: 20px;
-      text-decoration: none;
-      color: #d63384;
-      font-weight: bold;
-      font-size: 1.05rem;
-      transition: background 0.2s, color 0.2s;
-    }
-    nav a:hover, nav a.active {
-      background: linear-gradient(90deg, #fd5c63 0%, #fcb045 100%);
-      color: #fff;
-      box-shadow: 0 2px 8px #f8bbd0;
-    }
-    .nav-toggle {
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 40px;
-      height: 40px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      z-index: 20;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 28px;
-      height: 4px;
-      margin: 4px 0;
-      background: #d63384;
-      border-radius: 2px;
-      transition: 0.3s;
-    }
-    @media (max-width: 800px) {
-      .nav-container {
-        flex-direction: row;
-        padding: 0 1rem;
-      }
-      .nav-links {
-        flex-direction: column;
-        gap: 0;
-        background: #fff;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        max-height: 0;
-        overflow: hidden;
-        box-shadow: 0 2px 8px #f8bbd0;
-      }
-      .nav-links.open {
-        max-height: 400px;
-        border-radius: 0 0 12px 12px;
-        padding-bottom: 0.5rem;
-      }
-      .nav-links li {
-        border-bottom: 1px solid #f8bbd0;
-      }
-      .nav-toggle {
-        display: flex;
-      }
-    }
-    .section {
-      padding: 1rem;
-    }
-    .section h2 {
-      color: #d63384;
-    }
-    .product {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px #f8bbd0;
-      padding: 1.2rem;
-      margin-bottom: 1.2rem;
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      transition: box-shadow 0.2s;
-    }
-    .product:hover {
-      box-shadow: 0 4px 16px #f06292;
-    }
-    .product-info {
-      flex: 1;
-    }
-    .product-desc {
-      color: #d63384;
-      font-size: 0.98rem;
-      margin-top: 0.5rem;
-      background: #fff0f5;
-      border-left: 3px solid #d63384;
-      padding: 0.5rem 1rem;
-      border-radius: 0 8px 8px 0;
-    }
-    .proximamente {
-      opacity: 0.7;
-      background: #ffe4e1;
-      border: 1.5px dashed #d63384;
-      box-shadow: none;
-    }
-    .proximamente .product-desc {
-      color: #b71c1c;
-      background: #fff8f8;
-      border-left: 3px solid #b71c1c;
-    }
-    .proximamente h3 {
-      color: #b71c1c;
-    }
-    .proximamente .price {
-      color: #b71c1c;
-    }
-    .proximamente .stock {
-      color: #b71c1c;
-    }
-    .proximamente .ref-price {
-      color: #b71c1c;
-    }
-    .btn-instagram {
-      background: linear-gradient(90deg, #fd5c63 0%, #fcb045 100%);
-      color: #fff;
-      border: none;
-      border-radius: 20px;
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
-      font-weight: bold;
-      margin: 1rem 0;
-      cursor: pointer;
-      box-shadow: 0 2px 8px #f8bbd0;
-      transition: background 0.2s;
-    }
-    .btn-instagram:hover {
-      background: linear-gradient(90deg, #fcb045 0%, #fd5c63 100%);
-    }
-    .condiciones {
-      background: #fff8f8;
-      border: 1.5px solid #d63384;
-      border-radius: 12px;
-      margin: 2rem auto 1rem auto;
-      max-width: 700px;
-      padding: 1.5rem 2rem;
-      color: #b71c1c;
-      font-size: 1.05rem;
-      box-shadow: 0 2px 8px #f8bbd0;
-    }
-    .product img {
-      max-width: 100px;
-      border-radius: 8px;
-      display: block;
-    }
-    .price {
-      color: #333;
-      font-weight: bold;
-    }
-    footer {
-      background-color: #ffb6c1;
-      color: white;
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Miseon.cl — K-Beauty Chile</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fdf8f5;
+  --bg2: #fef4f4;
+  --white: #ffffff;
+  --blush: #f2c4ce;
+  --blush2: #fad9df;
+  --blush-deep: #e8899a;
+  --sage: #a8c5b5;
+  --sage-deep: #6fa68a;
+  --peach: #f7d4b5;
+  --peach-deep: #e8a87c;
+  --lavender: #d4cce8;
+  --lav-deep: #9b8ec4;
+  --text: #3a2d35;
+  --mid: #7a6470;
+  --soft: #b09aa8;
+  --border: rgba(242,196,206,0.5);
+  --border2: rgba(168,197,181,0.4);
+  --gold: #d4a0a8;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Quicksand',sans-serif;
+  font-weight:400;
+  min-height:100vh;
+}
+
+/* ── DECORATIVE BG ── */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 50% 40% at 10% 5%, rgba(242,196,206,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 90% 90%, rgba(168,197,181,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 25% at 80% 10%, rgba(212,204,232,0.2) 0%, transparent 60%);
+  pointer-events:none;z-index:0;
+}
+
+/* ── HEADER ── */
+header{
+  text-align:center;
+  padding:48px 24px 28px;
+  background:var(--white);
+  border-bottom:1px solid var(--border);
+  position:relative;z-index:1;
+}
+.logo-top{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin-bottom:6px;
+}
+.logo-pill{
+  background:linear-gradient(135deg,var(--blush),var(--lavender));
+  color:var(--text);
+  font-size:9px;letter-spacing:3px;text-transform:uppercase;
+  padding:5px 14px;border-radius:20px;font-weight:600;
+}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2rem,5vw,3.2rem);
+  font-weight:400;color:var(--text);
+  letter-spacing:1px;line-height:1.1;
+}
+h1 span{color:var(--blush-deep);font-style:italic;}
+.header-sub{
+  font-size:0.82rem;color:var(--soft);
+  margin-top:8px;letter-spacing:0.5px;
+}
+.header-sub a{color:var(--blush-deep);text-decoration:none;font-weight:600;}
+/* cherry blossom deco */
+.petals{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  pointer-events:none;overflow:hidden;
+}
+.petal{
+  position:absolute;font-size:1.1rem;opacity:0.18;
+  animation:fall linear infinite;
+}
+@keyframes fall{from{transform:translateY(-20px) rotate(0deg);}to{transform:translateY(120px) rotate(360deg);opacity:0;}}
+
+/* ── TABS ── */
+.tabs{
+  display:flex;justify-content:center;
+  background:var(--white);border-bottom:1px solid var(--border);
+  padding:0 16px;position:sticky;top:0;z-index:50;
+  overflow-x:auto;
+}
+.tab{
+  padding:14px 20px;font-size:0.75rem;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--soft);cursor:pointer;
+  border-bottom:2px solid transparent;transition:all 0.2s;
+  white-space:nowrap;font-weight:600;
+}
+.tab.active{color:var(--blush-deep);border-bottom-color:var(--blush-deep);}
+.tab:hover{color:var(--text);}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:36px 20px 80px;max-width:980px;margin:0 auto;position:relative;z-index:1;}
+.section.active{display:block;animation:fadeUp 0.45s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+
+/* ── CARDS ── */
+.card{
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:16px;padding:26px;
+  margin-bottom:18px;
+  box-shadow:0 2px 16px rgba(242,196,206,0.12);
+}
+.card-title{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-weight:600;color:var(--text);
+  margin-bottom:18px;display:flex;align-items:center;gap:8px;
+}
+.card-title .bubble{
+  width:8px;height:8px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blush),var(--lavender));
+  flex-shrink:0;
+}
+
+/* ── EYEBROW / HEADINGS ── */
+.eyebrow{
+  font-size:0.68rem;letter-spacing:3px;text-transform:uppercase;
+  color:var(--blush-deep);margin-bottom:6px;font-weight:600;
+}
+.section-h{
+  font-family:'Playfair Display',serif;
+  font-size:1.5rem;font-weight:400;color:var(--text);
+  margin-bottom:4px;
+}
+.section-sub{font-size:0.82rem;color:var(--soft);margin-bottom:22px;line-height:1.65;}
+
+/* ── FORM ── */
+label{
+  display:block;font-size:0.7rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--soft);margin-bottom:5px;margin-top:14px;font-weight:600;
+}
+label:first-of-type{margin-top:0;}
+input[type=number],select{
+  width:100%;background:var(--bg);border:1.5px solid var(--border);
+  border-radius:10px;color:var(--text);font-size:0.92rem;
+  font-family:'Quicksand',sans-serif;padding:10px 14px;transition:border 0.2s;
+}
+input[type=number]:focus,select:focus{outline:none;border-color:var(--blush-deep);background:var(--white);}
+input[type=range]{width:100%;accent-color:var(--blush-deep);margin-top:4px;}
+
+/* ── GRID ── */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+@media(max-width:620px){.grid2,.grid3{grid-template-columns:1fr;}}
+
+/* ── RESULT BOXES ── */
+.result-box{
+  background:var(--bg);border:1.5px solid var(--border);
+  border-radius:12px;padding:16px;text-align:center;
+}
+.result-box .rl{font-size:0.63rem;letter-spacing:2px;text-transform:uppercase;color:var(--soft);margin-bottom:8px;font-weight:600;}
+.result-box .rv{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--text);}
+.result-box.box-blush{background:linear-gradient(135deg,#fff0f2,#fce4e8);border-color:var(--blush);}
+.result-box.box-blush .rv{color:var(--blush-deep);}
+.result-box.box-sage .rv{color:var(--sage-deep);}
+.result-box.box-lav .rv{color:var(--lav-deep);}
+
+/* ── SHIP TOGGLE ── */
+.ship-toggle{display:flex;gap:8px;margin-top:6px;}
+.ship-btn{
+  flex:1;padding:9px 8px;border-radius:10px;
+  border:1.5px solid var(--border);background:var(--bg);
+  color:var(--soft);cursor:pointer;font-size:0.78rem;
+  font-family:'Quicksand',sans-serif;font-weight:600;
+  transition:all 0.2s;text-align:center;
+}
+.ship-btn.active{
+  background:linear-gradient(135deg,var(--blush2),var(--lavender));
+  color:var(--text);border-color:var(--blush);
+}
+
+/* ── BREAKDOWN BAR ── */
+.bbar{display:flex;height:7px;border-radius:10px;overflow:hidden;margin-top:16px;gap:2px;}
+.bseg{height:100%;border-radius:4px;transition:width 0.4s;}
+.blegend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;font-size:0.7rem;color:var(--soft);}
+.ldot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:5px;vertical-align:middle;}
+
+/* ── RECOM ── */
+.recom{
+  margin-top:16px;padding:14px 16px;
+  background:linear-gradient(135deg,#fff8f9,#f8f4ff);
+  border-left:3px solid var(--blush-deep);
+  border-radius:0 10px 10px 0;
+  font-size:0.85rem;line-height:1.7;color:var(--mid);
+}
+
+/* ── QUIZ ── */
+.qprogress{display:flex;gap:6px;margin-bottom:24px;}
+.qpdot{height:4px;border-radius:10px;flex:1;background:var(--border);transition:background 0.3s;}
+.qpdot.done{background:linear-gradient(90deg,var(--blush-deep),var(--lav-deep));}
+
+.skin-options{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px;}
+@media(max-width:400px){.skin-options{grid-template-columns:1fr;}}
+.skin-opt{
+  border:1.5px solid var(--border);border-radius:12px;
+  padding:14px 12px;cursor:pointer;transition:all 0.2s;background:var(--bg);
+}
+.skin-opt:hover{border-color:var(--blush-deep);background:var(--bg2);}
+.skin-opt.selected{
+  border-color:var(--blush-deep);
+  background:linear-gradient(135deg,#fff0f3,#f8f4ff);
+  box-shadow:0 2px 10px rgba(232,137,154,0.15);
+}
+.opt-title{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:3px;}
+.opt-desc{font-size:0.75rem;color:var(--soft);line-height:1.5;}
+
+.btn-primary{
+  display:block;width:100%;margin-top:20px;
+  padding:13px 24px;
+  background:linear-gradient(135deg,var(--blush-deep),var(--lav-deep));
+  color:white;font-family:'Quicksand',sans-serif;
+  font-size:0.8rem;letter-spacing:1.5px;text-transform:uppercase;
+  border:none;border-radius:12px;cursor:pointer;font-weight:700;
+  transition:opacity 0.2s;box-shadow:0 4px 16px rgba(232,137,154,0.3);
+}
+.btn-primary:hover{opacity:0.9;}
+.btn-primary:disabled{opacity:0.35;cursor:not-allowed;box-shadow:none;}
+.btn-ghost{
+  display:block;width:100%;margin-top:10px;
+  padding:11px 24px;background:transparent;
+  color:var(--soft);font-family:'Quicksand',sans-serif;
+  font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;
+  border:1.5px solid var(--border);border-radius:12px;cursor:pointer;font-weight:600;
+  transition:all 0.2s;
+}
+.btn-ghost:hover{border-color:var(--blush);color:var(--text);}
+
+/* ── AI LOADING ── */
+.ai-loading{
+  text-align:center;padding:50px 20px;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.1rem;color:var(--soft);
+}
+.spinner{
+  width:40px;height:40px;border-radius:50%;
+  border:3px solid var(--border);border-top-color:var(--blush-deep);
+  animation:spin 0.9s linear infinite;margin:0 auto 16px;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ── SKIN PROFILE ── */
+.skin-profile{
+  display:flex;align-items:center;gap:16px;
+  padding:20px 22px;
+  background:linear-gradient(135deg,#fff0f3,#f4f0ff,#f0faf5);
+  border:1.5px solid var(--blush);border-radius:16px;margin-bottom:18px;
+}
+.skin-emoji-wrap{
+  width:58px;height:58px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blush2),var(--lavender));
+  display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+}
+.skin-profile h2{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:600;color:var(--text);}
+.skin-profile p{font-size:0.8rem;color:var(--mid);margin-top:3px;line-height:1.55;}
+
+/* ── PRODUCT CARDS ── */
+.prod-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:13px;margin-top:6px;
+}
+.prod-card{
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:14px;padding:16px;transition:all 0.2s;
+}
+.prod-card:hover{border-color:var(--blush-deep);transform:translateY(-2px);box-shadow:0 6px 20px rgba(242,196,206,0.2);}
+.prod-badge{
+  display:inline-block;font-size:0.62rem;letter-spacing:1.5px;text-transform:uppercase;
+  padding:3px 10px;border-radius:20px;margin-bottom:9px;font-weight:600;
+}
+.b-clean{background:#fce8ed;color:#c46070;}
+.b-toner{background:#e8f0fc;color:#4a70c4;}
+.b-serum{background:#fce8f8;color:#b450a8;}
+.b-cream{background:#fef0e0;color:#c47830;}
+.b-sun{background:#fefce0;color:#9a9010;}
+.b-eye{background:#f0e8fc;color:#7850c4;}
+.b-mask{background:#e8fce8;color:#30a430;}
+
+.prod-name{font-size:0.88rem;font-weight:600;color:var(--text);margin-bottom:5px;line-height:1.35;}
+.prod-why{
+  font-size:0.75rem;color:var(--sage-deep);
+  background:#f0faf5;border-radius:8px;padding:8px 10px;
+  line-height:1.55;margin-bottom:10px;border-left:2px solid var(--sage);
+}
+.prod-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  border-top:1px solid var(--border);padding-top:9px;
+}
+.prod-price{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--blush-deep);}
+.priority-label{font-size:0.62rem;letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+.p-esencial{color:var(--blush-deep);}
+.p-recomendado{color:var(--lav-deep);}
+.p-complementario{color:var(--sage-deep);}
+
+/* ── ROUTINE ── */
+.routine-step{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
+.routine-step:last-child{border-bottom:none;}
+.step-circle{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--blush2),var(--lavender));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.72rem;font-weight:700;color:var(--text);margin-top:1px;
+}
+.step-type{font-size:0.63rem;letter-spacing:2px;text-transform:uppercase;color:var(--blush-deep);margin-bottom:2px;font-weight:600;}
+.step-prod{font-size:0.88rem;font-weight:600;color:var(--text);}
+.step-tip{font-size:0.75rem;color:var(--soft);margin-top:3px;line-height:1.5;}
+
+/* ── DERM NOTE ── */
+.derm-box{font-size:0.85rem;color:var(--mid);line-height:1.8;}
+.warn-box{
+  margin-top:12px;padding:10px 14px;
+  background:#fff5f6;border-left:3px solid var(--blush-deep);
+  border-radius:0 8px 8px 0;font-size:0.82rem;color:var(--blush-deep);
+}
+
+/* ── BUSINESS SECTION ── */
+.biz-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:600px){.biz-grid{grid-template-columns:1fr;}}
+.biz-card{
+  background:linear-gradient(135deg,#fff0f3,#f8f4ff);
+  border:1.5px solid var(--blush);border-radius:14px;padding:20px;
+}
+.biz-card h3{
+  font-family:'Playfair Display',serif;font-size:1rem;
+  color:var(--text);margin-bottom:10px;
+}
+.copy-box{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:10px;padding:12px;font-size:0.78rem;
+  color:var(--mid);line-height:1.7;white-space:pre-wrap;
+  font-family:'Quicksand',sans-serif;margin-bottom:10px;
+  max-height:160px;overflow-y:auto;
+}
+.btn-copy{
+  display:block;width:100%;padding:9px;
+  background:linear-gradient(135deg,var(--blush-deep),var(--lav-deep));
+  color:white;border:none;border-radius:10px;cursor:pointer;
+  font-family:'Quicksand',sans-serif;font-size:0.75rem;
+  letter-spacing:1px;text-transform:uppercase;font-weight:700;
+  transition:opacity 0.2s;
+}
+.btn-copy:hover{opacity:0.88;}
+.btn-copy.copied{background:linear-gradient(135deg,var(--sage-deep),var(--sage));}
+
+.info-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:20px;padding:6px 14px;font-size:0.78rem;
+  color:var(--mid);margin:4px;font-weight:500;
+}
+.info-pill .dot-pill{
+  width:7px;height:7px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blush-deep),var(--lav-deep));
+}
+
+/* ── INVENTORY TAB ── */
+.inv-section{margin-bottom:8px;}
+.inv-header{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.85rem;font-weight:700;color:var(--text);
+  padding:12px 0 8px;border-bottom:1px solid var(--border);
+  margin-bottom:10px;text-transform:uppercase;letter-spacing:1px;
+}
+
+/* ── TABLE ── */
+.table-wrap{overflow-x:auto;margin-top:8px;}
+table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+th{color:var(--soft);font-size:0.63rem;letter-spacing:2px;text-transform:uppercase;
+  padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);font-weight:600;}
+td{padding:10px;border-bottom:1px solid rgba(242,196,206,0.15);}
+tr:hover td{background:var(--bg2);}
+.btn-add-row{
+  margin-top:10px;background:none;
+  border:1.5px dashed var(--blush);color:var(--blush-deep);
+  border-radius:10px;padding:9px 18px;cursor:pointer;
+  font-family:'Quicksand',sans-serif;font-size:0.75rem;
+  transition:all 0.2s;width:100%;letter-spacing:1px;font-weight:600;
+}
+.btn-add-row:hover{background:var(--bg2);}
+.btn-del-row{background:none;border:none;color:var(--border);cursor:pointer;font-size:0.9rem;transition:color 0.2s;}
+.btn-del-row:hover{color:var(--blush-deep);}
+
+/* ── RATE BAR ── */
+.rate-bar{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--white);border:1.5px solid var(--border);
+  border-radius:12px;padding:12px 20px;margin-bottom:22px;
+  font-size:0.8rem;flex-wrap:wrap;
+}
+.rate-bar span{color:var(--soft);}
+.rate-input{
+  background:var(--bg);border:1.5px solid var(--blush);
+  border-radius:8px;color:var(--blush-deep);font-size:0.95rem;
+  font-weight:600;padding:4px 10px;width:86px;text-align:center;
+  font-family:'Quicksand',sans-serif;
+}
+.rate-input:focus{outline:none;border-color:var(--blush-deep);}
+
+.note{font-size:0.73rem;color:var(--soft);margin-top:10px;line-height:1.6;}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo-title">
-      <!-- Si tienes un logo, reemplaza el src por la ruta de tu logo -->
-      <!-- <img src="Img/skincare/Logotipo.png" alt="Logo Miseon"> -->
-      <h1>Catálogo Miseon</h1>
-    </div>
-  </header>
-  <nav>
-    <div class="nav-container">
-      <button class="nav-toggle" aria-label="Abrir menú" onclick="document.querySelector('.nav-links').classList.toggle('open')">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <ul class="nav-links">
-        <li><a href="#limpiadores">Limpiadores</a></li>
-        <li><a href="#cremas">Cremas</a></li>
-        <li><a href="#bloqueadores">Bloqueadores</a></li>
-        <li><a href="#tonicos">Tónicos</a></li>
-        <li><a href="#serums">Serums</a></li>
-        <li><a href="#mascarillas">Mascarillas</a></li>
-      </ul>
-    </div>
-  </nav>
 
+<!-- Petals deco -->
+<div class="petals" aria-hidden="true">
+  <div class="petal" style="left:5%;animation-duration:8s;animation-delay:0s">🌸</div>
+  <div class="petal" style="left:20%;animation-duration:11s;animation-delay:2s">🌺</div>
+  <div class="petal" style="left:45%;animation-duration:9s;animation-delay:4s">🌸</div>
+  <div class="petal" style="left:70%;animation-duration:13s;animation-delay:1s">✿</div>
+  <div class="petal" style="left:88%;animation-duration:10s;animation-delay:3s">🌸</div>
+</div>
 
-    <div class="product">
-      <img src="Img/skincare/Retinol 0.2 Boosting Shot Ampoule.png" alt="Retinol 0.2 Boosting Shot Ampoule">
-      <div class="product-info">
-        <h3>Retinol 0.2 Boosting Shot Ampoule</h3>
-        <p class="price">$32.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Retinol%200.2%20Boosting%20Shot%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/Poremizing Fresh Ampoule.png" alt="Poremizing Fresh Ampoule">
-      <div class="product-info">
-        <h3>Poremizing Fresh Ampoule</h3>
-        <p class="price">$30.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Poremizing%20Fresh%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/Niacinamide 10 TXA 4 Serum for Brightening and Dark Spots.png" alt="Niacinamide 10 TXA 4 Serum for Brightening and Dark Spots">
-      <div class="product-info">
-        <h3>Niacinamide 10 TXA 4 Serum for Brightening and Dark Spots</h3>
-        <p class="price">$38.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Niacinamide%2010%20TXA%204%20Serum%20for%20Brightening%20and%20Dark%20Spots" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/Niacinamide 10 Boosting Shot Ampoule.png" alt="Niacinamide 10 Boosting Shot Ampoule">
-      <div class="product-info">
-        <h3>Niacinamide 10 Boosting Shot Ampoule</h3>
-        <p class="price">$28.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Niacinamide%2010%20Boosting%20Shot%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/MIXSOON Bean Essence 50ml.png" alt="MIXSOON Bean Essence 50ml">
-      <div class="product-info">
-        <h3>MIXSOON Bean Essence 50ml</h3>
-        <p class="price">$40.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=MIXSOON%20Bean%20Essence%2050ml" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/Matrixyl 10 Boosting Shot Ampoule.png" alt="Matrixyl 10 Boosting Shot Ampoule">
-      <div class="product-info">
-        <h3>Matrixyl 10 Boosting Shot Ampoule</h3>
-        <p class="price">$26.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Matrixyl%2010%20Boosting%20Shot%20Ampoule" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-          <div class="product">
-            <img src="Img/skincare/Beauty of Joseon - Sérum Facial Revive Serum (30ml).png" alt="Beauty of Joseon Revive Serum">
-            <div class="product-info">
-              <h3>Beauty of Joseon - Sérum Facial Revive Serum (30ml)</h3>
-              <p class="price">$26.000 CLP</p>
-              <p class="stock">Stock disponible: Agotado</p>
-              <p class="ref-price">Precio referencial: $27.990 CLP</p>
-              <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Sérum%20Facial%20Revive%20Serum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-              <div class="product-desc">
-                ¡Este producto ya está disponible y puedes solicitarlo!
-              </div>
-            </div>
-          </div>
-    <div class="product">
-      <img src="Img/skincare/Beauty of Joseon - Sérum aclarante Glow Deep Serum (30ml).png" alt="Glow Deep Serum">
-      <div class="product-info">
-        <h3>Beauty of Joseon - Sérum aclarante Glow Deep Serum (30ml)</h3>
-        <p class="price">$26.000 CLP</p>
-        <p class="stock">agotado</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Sérum%20aclarante%20Glow%20Deep%20Serum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+<header>
+  <div class="logo-top">
+    <div class="logo-pill">🇰🇷 Miseon.cl · K-Beauty Chile</div>
+  </div>
+  <h1><span>Mejora tu Piel</span> con Miseon</h1>
+  <p class="header-sub">Diagnóstico de piel · Rutinas personalizadas · Precios · <a href="https://wa.me/56958916286" target="_blank">WhatsApp 📲</a></p>
+</header>
 
+<div class="tabs">
+  <div class="tab active" onclick="showTab('advisor',this)">🌸 Asesor de Piel</div>
+  <div class="tab" onclick="showTab('inventory',this)">📦 Inventario</div>
+  <div class="tab" onclick="showTab('negocio',this)">🏪 Mi Negocio</div>
+</div>
+
+<!-- ═══ TAB: ADVISOR ═══ -->
+<div class="section active" id="tab-advisor">
+
+  <div id="quiz-wrap">
+    <div class="card">
+      <p class="eyebrow">Diagnóstico personalizado</p>
+      <h2 class="section-h">¿Cómo es tu piel?</h2>
+      <p class="section-sub">4 preguntas rápidas y nuestra IA — con conocimiento dermatológico — te dirá exactamente qué productos de Miseon.cl son para ti.</p>
+
+      <div class="qprogress">
+        <div class="qpdot done" id="qp0"></div>
+        <div class="qpdot" id="qp1"></div>
+        <div class="qpdot" id="qp2"></div>
+        <div class="qpdot" id="qp3"></div>
+      </div>
+
+      <!-- Q1 -->
+      <div class="quiz-step active" id="qs0">
+        <div class="card-title"><span class="bubble"></span>¿Cómo sientes tu piel a mediodía, sin productos?</div>
+        <div class="skin-options">
+          <div class="skin-opt" onclick="pick(0,this,'Grasa — brillo en toda la cara, poros visibles')"><div class="opt-title">✨ Grasa</div><div class="opt-desc">Brillo intenso, poros visibles, maquillaje se corre</div></div>
+          <div class="skin-opt" onclick="pick(0,this,'Seca — tirante, sin brillo, a veces descama')"><div class="opt-title">🌵 Seca</div><div class="opt-desc">Tirante, sin brillo, poros pequeños, puede descamar</div></div>
+          <div class="skin-opt" onclick="pick(0,this,'Mixta — zona T grasa, mejillas normales o secas')"><div class="opt-title">☯️ Mixta</div><div class="opt-desc">Zona T grasa, mejillas normales o secas</div></div>
+          <div class="skin-opt" onclick="pick(0,this,'Normal — equilibrada, sin problemas evidentes')"><div class="opt-title">🌸 Normal</div><div class="opt-desc">Equilibrada, ni grasa ni seca, sin problemas</div></div>
+          <div class="skin-opt" onclick="pick(0,this,'Sensible — reacciona fácil, rojeces, arde con productos')"><div class="opt-title">🌡️ Sensible</div><div class="opt-desc">Reacciona fácil, se irrita, rojeces frecuentes</div></div>
+          <div class="skin-opt" onclick="pick(0,this,'Rosácea — enrojecimiento persistente, venas visibles, ardor')"><div class="opt-title">🌹 Rosácea</div><div class="opt-desc">Enrojecimiento crónico, capilares visibles, piel reactiva</div></div>
+        </div>
+        <button class="btn-primary" id="qb0" onclick="goNext(1)" disabled>Continuar →</button>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-step" id="qs1" style="display:none">
+        <div class="card-title"><span class="bubble"></span>¿Tu principal preocupación?</div>
+        <div class="skin-options" style="grid-template-columns:repeat(2,1fr)">
+          <div class="skin-opt" onclick="pick(1,this,'Acné activo o granitos frecuentes')"><div class="opt-title">🔴 Acné</div><div class="opt-desc">Granitos, comedones, brotes frecuentes</div></div>
+          <div class="skin-opt" onclick="pick(1,this,'Manchas e hiperpigmentación, marcas de acné')"><div class="opt-title">🟤 Manchas</div><div class="opt-desc">Tono desigual, marcas, hiperpigmentación</div></div>
+          <div class="skin-opt" onclick="pick(1,this,'Poros dilatados y textura irregular')"><div class="opt-title">🕳️ Poros</div><div class="opt-desc">Textura rugosa, poros grandes, puntos negros</div></div>
+          <div class="skin-opt" onclick="pick(1,this,'Piel sensible, rojeces o irritación frecuente')"><div class="opt-title">🌡️ Sensible</div><div class="opt-desc">Irritación fácil, rosácea, enrojece</div></div>
+          <div class="skin-opt" onclick="pick(1,this,'Falta de hidratación, barrera cutánea débil')"><div class="opt-title">💧 Hidratación</div><div class="opt-desc">Piel apagada, líneas finas, barrera débil</div></div>
+          <div class="skin-opt" onclick="pick(1,this,'Envejecimiento, arrugas o pérdida de firmeza')"><div class="opt-title">⏳ Antienvejecimiento</div><div class="opt-desc">Líneas, arrugas, firmeza</div></div>
+        </div>
+        <button class="btn-primary" id="qb1" onclick="goNext(2)" disabled>Continuar →</button>
+        <button class="btn-ghost" onclick="goPrev(0)">← Volver</button>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-step" id="qs2" style="display:none">
+        <div class="card-title"><span class="bubble"></span>¿Cuál es tu nivel con el skincare?</div>
+        <div class="skin-options">
+          <div class="skin-opt" onclick="pick(2,this,'Principiante — solo limpiador y crema básica')"><div class="opt-title">🌱 Principiante</div><div class="opt-desc">Poco o ningún skincare actualmente</div></div>
+          <div class="skin-opt" onclick="pick(2,this,'Intermedio — tónico, sérum y crema regularmente')"><div class="opt-title">🌿 Intermedio</div><div class="opt-desc">Rutina básica, algo de K-beauty</div></div>
+          <div class="skin-opt" onclick="pick(2,this,'Avanzado — rutina K-beauty completa AM y PM')"><div class="opt-title">🌳 Avanzado</div><div class="opt-desc">Conozco bien el K-beauty, múltiples pasos</div></div>
+        </div>
+        <button class="btn-primary" id="qb2" onclick="goNext(3)" disabled>Continuar →</button>
+        <button class="btn-ghost" onclick="goPrev(1)">← Volver</button>
+      </div>
+
+      <!-- Q4 -->
+      <div class="quiz-step" id="qs3" style="display:none">
+        <div class="card-title"><span class="bubble"></span>¿Cuánto tiempo tienes para tu rutina?</div>
+        <div class="skin-options">
+          <div class="skin-opt" onclick="pick(3,this,'Menos de 5 minutos — mínima y eficiente')"><div class="opt-title">⚡ Rápida (&lt;5 min)</div><div class="opt-desc">Máximo resultado, mínimos pasos</div></div>
+          <div class="skin-opt" onclick="pick(3,this,'Entre 5 y 15 minutos — rutina moderada')"><div class="opt-title">🕐 Moderada (5–15 min)</div><div class="opt-desc">Tiempo para una rutina completa básica</div></div>
+          <div class="skin-opt" onclick="pick(3,this,'Más de 15 minutos — me encanta el ritual')"><div class="opt-title">🛁 Completa (+15 min)</div><div class="opt-desc">Disfruto el proceso de skincare</div></div>
+        </div>
+        <button class="btn-primary" id="qb3" onclick="runAI()" disabled>✨ Analizar mi piel</button>
+        <button class="btn-ghost" onclick="goPrev(2)">← Volver</button>
       </div>
     </div>
-    <div class="product">
-      <img src="Img/skincare/Purito SEOUL - Sérum Wonder Releaf Centella Serum Unscented (60ml).png" alt="Purito Wonder Releaf Centella">
-      <div>
-        <h3>Purito SEOUL - Sérum Wonder Releaf Centella Serum Unscented (60ml)</h3>
-        <p class="price">$28.000 CLP</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $30.000 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Purito%20SEOUL%20-%20Sérum%20Wonder%20Releaf%20Centella%20Serum%20Unscented%20(60ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+  </div>
 
-      </div>
+  <!-- AI RESULT -->
+  <div id="ai-result" style="display:none">
+    <div id="ai-loading" class="card ai-loading">
+      <div class="spinner"></div>
+      Analizando tu perfil de piel…
     </div>
-    <div class="product">
-      <img src="Img/skincare/Beauty of Joseon - Glow Sérum (30ml).png" alt="Glow Serum">
-      <div class="product-info">
-        <h3>Beauty of Joseon - Glow Sérum (30ml)</h3>
-        <p class="price">$26.000 CLP</p>
-        <p class="stock">Stock disponible: 1 unidades</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Glow%20Sérum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
+    <div id="ai-content" style="display:none">
+      <div class="skin-profile" id="skin-profile"></div>
+      <div class="card">
+        <p class="eyebrow">Selección personalizada</p>
+        <h2 class="section-h" style="font-size:1.2rem;margin-bottom:4px">Tus productos ideales</h2>
+        <p class="section-sub" style="margin-bottom:14px">De nuestro catálogo Miseon.cl, ordenados por prioridad.</p>
+        <div class="prod-grid" id="prod-grid"></div>
       </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/SKIN 1004 - Sérum Facial Iluminador Madagascar Centella Tone Brightening Capsule Ampoule Jumbo (100ml).png" alt="Tone Brightening Capsule">
-      <div>
-        <h3>SKIN 1004 - Sérum Facial Iluminador Madagascar Centella Tone Brightening Capsule Ampoule Jumbo (50ml)</h3>
-        <p class="price">$25.000 CLP</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $35.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Sérum%20Facial%20Iluminador%20Madagascar%20Centella%20Tone%20Brightening%20Capsule%20Ampoule%20Jumbo%20(100ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-
+      <div class="card">
+        <p class="eyebrow">Ritual diario</p>
+        <h2 class="section-h" style="font-size:1.2rem;margin-bottom:14px">Tu rutina paso a paso</h2>
+        <div id="routine-steps"></div>
       </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml).png" alt="Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml)">
-      <div>
-        <h3>Purito SEOUL - Sérum sin fragancia Centella Unscented Serum MINI (15ml)</h3>
-        <p class="price">$10.000</p>
-        <p class="stock">Stock disponible: 5 unidades</p>
-        <p class="ref-price">Precio referencial: $15.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Purito%20SEOUL%20-%20Sérum%20sin%20fragancia%20Centella%20Unscented%20Serum%20MINI%20(15ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
+      <div class="card">
+        <div class="card-title"><span class="bubble"></span>Nota dermatológica</div>
+        <div class="derm-box" id="derm-notes"></div>
       </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/Beauty of Joseon - Set Hanbang Serum Discovery (10ml x 4 uds.).png" alt="Beauty of Joseon - Set Hanbang Serum Discovery (10ml x 4 uds.)">
-      <div>
-        <h3>Beauty of Joseon - Set Hanbang Serum Discovery (15ml x 4 uds.) Por separado (Opcion) </h3>
-        <p class="price">$40.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $50.000 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Set%20Hanbang%20Serum%20Discovery%20(15ml%20x%204%20uds.)%20Por%20separado%20(Opcion)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
+      <div style="background:linear-gradient(135deg,#fff0f3,#f4f0ff);border:1.5px solid var(--blush);border-radius:16px;padding:22px 24px;margin-bottom:16px;text-align:center">
+        <div style="font-size:1.1rem;margin-bottom:6px">🌸 ¿Tienes más consultas o quieres armar un pack?</div>
+        <p style="font-size:0.83rem;color:var(--mid);line-height:1.7;margin-bottom:14px">Habla directo con la dueña — te ayuda a elegir lo mejor para tu piel y si llevas varios productos <strong style="color:var(--blush-deep)">podrías obtener envío gratis a domicilio</strong>. Despachamos con <strong>Blue Express</strong> a todo Chile 🚚</p>
+        <a href="https://wa.me/56958916286" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#25d366,#1da851);color:white;text-decoration:none;padding:12px 28px;border-radius:12px;font-size:0.82rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;box-shadow:0 4px 14px rgba(37,211,102,0.3)">💬 Escribir al WhatsApp</a>
+        <p style="font-size:0.72rem;color:var(--soft);margin-top:10px">+56 9 5891 6286 · @miseon.cl</p>
       </div>
+      <button class="btn-ghost" onclick="resetQuiz()">← Nuevo diagnóstico</button>
     </div>
   </div>
 </div>
-    <div class="product">
-       <img src="Img/skincare/celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml).png" alt="celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml)">
-       <div>
-         <h3>celimax - Sérum Iluminador Pore + Dark Spot Brightening Serum (30ml)</h3>
-         <p class="price">$22.000</p>
-         <p class="stock">Stock disponible: 1 unidades</p>
-         <p class="ref-price">Precio referencial: $27.990 CLP</p>
-         <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=celimax%20-%20Sérum%20Iluminador%20Pore%20+%20Dark%20Spot%20Brightening%20Serum%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
 
-    </div>
+<!-- ═══ TAB: CALC ═══ -->
+<div class="section" id="tab-calc" style="display:none!important">
+  <p class="eyebrow">Herramienta de precios</p>
+  <h2 class="section-h">Calculadora de Precios</h2>
+  <p class="section-sub">Calcula el precio ideal para vender en Facebook Marketplace.</p>
+
+  <div class="rate-bar">
+    <span>💱 USD → CLP</span>
+    <input class="rate-input" type="number" id="tc" value="950" min="1" oninput="calc()">
+    <span>CLP / dólar</span>
   </div>
-<div>
-  
 
-  <div class="section" id="tonicos">
-    <h2>Tónicos</h2>
-    <div class="product">
-      <img src="Img/skincare/Anua - Tónico Facial con Arroz y Niacinamida Rice 70 Glow Milky Toner Mini (40ml).png" alt="Anua Toner">
-      <div class="product-info">
-        <h3>Anua - Tónico Facial con Arroz y Niacinamida Rice 70 Glow Milky Toner Mini (40ml)</h3>
-        <p class="price">$13.000 CLP</p>
-        <p class="stock">Stock disponible: 5 unidades</p>
-        <p class="ref-price">Precio referencial: $15.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Anua%20-%20Tónico%20Facial%20con%20Arroz%20y%20Niacinamida%20Rice%2070%20Glow%20Milky%20Toner%20Mini%20(40ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title"><span class="bubble"></span>Costos</div>
+      <label>Precio YesStyle (USD)</label>
+      <input type="number" id="c_usd" value="15" min="0" step="0.01" oninput="calc()">
+      <label>Cantidad</label>
+      <input type="number" id="c_qty" value="3" min="1" oninput="calc()">
+      <label>Envío desde Corea</label>
+      <div class="ship-toggle">
+        <div class="ship-btn active" id="sb_free" onclick="setSh('free')">✈️ Gratis</div>
+        <div class="ship-btn" id="sb_std" onclick="setSh('std')">📦 USD $8</div>
       </div>
+      <label style="margin-top:14px">Embalaje extras (CLP)</label>
+      <input type="number" id="c_extra" value="500" min="0" oninput="calc()">
     </div>
-    <div class="product">
-      <img src="Img/skincare/Beauty of Joseon - Tónico Glow Replenishing Rice Milk (150ml).png" alt="Tónico Rice Milk">
-      <div class="product-info">
-        <h3>Beauty of Joseon - Tónico Glow Replenishing Rice Milk (150ml)</h3>
-        <p class="price">$26.000 CLP</p>
-        <p class="stock">Stock disponible: 1 unidades</p>
-        <p class="ref-price">Precio referencial: $29.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Tónico%20Glow%20Replenishing%20Rice%20Milk%20(150ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/Isntree - Tónico con ácido hialurónico MINI (20ml).png" alt="Isntree - Tónico con ácido hialurónico MINI (20ml)">
-      <div>
-        <h3>Isntree - Tónico con ácido hialurónico MINI (20ml)</h3>
-        <p class="price">$5.000</p>
-        <p class="stock">Stock disponible: 1 unidades</p>
-        <p class="ref-price">Precio referencial: $8.000 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Isntree%20-%20Tónico%20con%20ácido%20hialurónico%20MINI%20(20ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml).png" alt="SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml)">
-      <div>
-        <h3>SKIN 1004 - Bruma Madagascar Centella Hyalu-Cica Cloudy Mist (120ml)</h3>
-        <p class="price">$26.000</p>
-        <p class="stock">Stock disponible: 1 unidades</p>
-        <p class="ref-price">Precio referencial: $30.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Bruma%20Madagascar%20Centella%20Hyalu-Cica%20Cloudy%20Mist%20(120ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
+    <div class="card">
+      <div class="card-title"><span class="bubble"></span>Estrategia</div>
+      <label>Plataforma</label>
+      <select id="c_fee" onchange="calc()">
+        <option value="0" selected>Facebook Marketplace 🎉 Sin comisión</option>
+        <option value="13">Mercado Libre Clásica 13%</option>
+        <option value="16">Mercado Libre Premium 16%</option>
+        <option value="6.5">Mercado Libre Básica 6.5%</option>
+      </select>
+      <label>Margen: <span id="mg_lbl">40</span>%</label>
+      <input type="range" id="c_mg" min="10" max="120" value="40"
+        oninput="document.getElementById('mg_lbl').textContent=this.value;document.getElementById('mg_show').textContent=this.value+'%';calc()">
+      <span style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--blush-deep)" id="mg_show">40%</span>
     </div>
   </div>
 
-  <div class="section" id="bloqueadores">
-    <h2>Bloqueadores</h2>
-    <div class="product">
-      <img src="Img/skincare/TOCOBO - Protector Solar Algodón Suave Cotton Soft Sun Stick (19g).png" alt="TOCOBO Cotton Soft Sun Stick">
-      <div class="product-info">
-        <h3>TOCOBO - Protector Solar Algodón Suave Cotton Soft Sun Stick (19g)</h3>
-        <p class="price">$24.000 CLP</p>
-        <p class="stock">Stock disponible: 1 unidades</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=TOCOBO%20-%20Protector%20Solar%20Algodón%20Suave%20Cotton%20Soft%20Sun%20Stick%20(19g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
+  <div class="card">
+    <div class="card-title"><span class="bubble"></span>Resultado por Unidad</div>
+    <div class="grid3">
+      <div class="result-box"><div class="rl">Costo unit.</div><div class="rv" id="r_c">—</div></div>
+      <div class="result-box box-blush"><div class="rl">Precio venta</div><div class="rv" id="r_p">—</div></div>
+      <div class="result-box box-sage"><div class="rl">Ganancia neta</div><div class="rv" id="r_g">—</div></div>
+      <div class="result-box box-lav"><div class="rl">Margen real</div><div class="rv" id="r_mr">—</div></div>
+      <div class="result-box"><div class="rl">Precio mínimo</div><div class="rv" id="r_min">—</div></div>
+      <div class="result-box"><div class="rl">Ganancia total</div><div class="rv" id="r_tot" style="color:var(--peach-deep)">—</div></div>
     </div>
-    <div class="product">
-      <img src="Img/skincare/mixsoon - Protector Solar Centella Sun Cream (50g).png" alt="Mixsoon Sun Cream">
-      <div class="product-info">
-        <h3>mixsoon - Protector Solar Centella Sun Cream (50g)</h3>
-        <p class="price">$24.000 CLP</p>
-        <p class="stock">Stock disponible: 1 unidades</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=mixsoon%20-%20Protector%20Solar%20Centella%20Sun%20Cream%20(50g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
+    <div class="bbar">
+      <div class="bseg" id="b_c" style="background:var(--sage)"></div>
+      <div class="bseg" id="b_f" style="background:var(--lavender)"></div>
+      <div class="bseg" id="b_g" style="background:var(--blush-deep)"></div>
     </div>
-    <div class="product">
-      <img src="Img/skincare/TOCOBO - Cica Cooling Sun Stick (18g).png" alt="Tocobo Cica Cooling">
-      <div class="product-info">
-        <h3>TOCOBO - Cica Cooling Sun Stick (18g)</h3>
-        <p class="price">$24.000 CLP</p>
-        <p class="stock">Stock disponible: 5 unidades</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=TOCOBO%20-%20Cica%20Cooling%20Sun%20Stick%20(18g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
+    <div class="blegend">
+      <span><span class="ldot" style="background:var(--sage)"></span>Costo</span>
+      <span><span class="ldot" style="background:var(--lavender)"></span>Comisión</span>
+      <span><span class="ldot" style="background:var(--blush-deep)"></span>Ganancia</span>
     </div>
-    <div class="product">
-  <img src="Img/skincare/TOCOBO - Protector Solar Cica Calming Sun Serum.png" alt="TOCOBO - Protector Solar Cica Calming Sun Serum">
-  <div>
-    <h3>TOCOBO - Protector Solar Cica Calming Sun Serum</h3>
-    <p class="price">$24.000</p>
-    <p class="stock">Stock disponible: 4 unidades</p>
-    <p class="ref-price">Precio referencial: $27.990 CLP</p>
-    <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=TOCOBO%20-%20Protector%20Solar%20Cica%20Calming%20Sun%20Serum" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+    <div class="recom" id="r_recom"></div>
+    <p class="note">* Facebook Marketplace no cobra comisión. Si cambias de plataforma, actualiza el selector.</p>
   </div>
-</div>
-<div class="product">
-  <img src="Img/skincare/SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml).png" alt="SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml)">
-  <div>
-    <h3>SKIN 1004 - Protector Solar Madagascar Centella Hyalu-Cica Water-Fit Sun Serum (50ml)</h3>
-    <p class="price">$21.000</p>
-    <p class="stock">Stock disponible: 4 unidades</p>
-    <p class="ref-price">Precio referencial: $27.990 CLP</p>
-    <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Protector%20Solar%20Madagascar%20Centella%20Hyalu-Cica%20Water-Fit%20Sun%20Serum%20(50ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+
+  <div class="card">
+    <div class="card-title"><span class="bubble"></span>Comparador de Productos</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Producto</th><th>USD</th><th>Und.</th><th>Costo CLP</th><th>Precio venta</th><th>Ganancia</th><th></th></tr></thead>
+        <tbody id="tbl_body"></tbody>
+      </table>
+    </div>
+    <button class="btn-add-row" onclick="addRow()">+ Agregar producto</button>
   </div>
 </div>
 
-    <div class="product">
-      <img src="Img/skincare/SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml).png" alt="SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml)">
-      <div>
-        <h3>SKIN 1004 - Madagascar Centella Probio-Cica Glow Sun Ampoule (50ml)</h3>
-        <p class="price">$22.000</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Madagascar%20Centella%20Probio-Cica%20Glow%20Sun%20Ampoule%20(50ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
+<!-- ═══ TAB: INVENTORY ═══ -->
+<div class="section" id="tab-inventory">
+  <p class="eyebrow">Catálogo Miseon.cl</p>
+  <h2 class="section-h">Inventario Completo</h2>
+  <p class="section-sub">Todos tus productos organizados por categoría.</p>
+  <div id="inv-container"></div>
+</div>
+
+<!-- ═══ TAB: NEGOCIO ═══ -->
+<div class="section" id="tab-negocio">
+  <p class="eyebrow">Miseon.cl</p>
+  <h2 class="section-h">Mi Negocio</h2>
+  <p class="section-sub">Textos listos para copiar y pegar en tus publicaciones y estados.</p>
+
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title"><span class="bubble"></span>Información de contacto</div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px">
+      <span class="info-pill"><span class="dot-pill"></span>@miseon.cl</span>
+      <span class="info-pill"><span class="dot-pill"></span>+56 9 5891 6286</span>
+      <span class="info-pill"><span class="dot-pill"></span>Intermodal L2/L4A</span>
+      <span class="info-pill"><span class="dot-pill"></span>Tren Nos</span>
+      <span class="info-pill"><span class="dot-pill"></span>Envío gratis +$80.000</span>
     </div>
   </div>
 
-  <div class="section" id="mascarillas">
-    <h2>Mascarillas</h2>
-    <div class="product">
-      <img src="Img/skincare/Beauty of Joseon - Mascarilla Facial Ground Rice and Honey Glow Mask (150ml).png" alt="Mascarilla Rice and Honey">
-      <div class="product-info">
-        <h3>Beauty of Joseon - Mascarilla Facial Ground Rice and Honey Glow Mask (150ml)</h3>
-        <p class="price">$25.000 CLP</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Beauty%20of%20Joseon%20-%20Mascarilla%20Facial%20Ground%20Rice%20and%20Honey%20Glow%20Mask%20(150ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g).png" alt="SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g)">
-      <div>
-        <h3>SKIN 1004 - Mascarilla de Arcilla Madagascar Centella Poremizing Quick Clay Stick Mask (27g)</h3>
-        <p class="price">$25.000 CLP</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $29.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Mascarilla%20de%20Arcilla%20Madagascar%20Centella%20Poremizing%20Quick%20Clay%20Stick%20Mask%20(27g)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="section" id="limpiadores">
-    <h2>Limpiadores</h2>
-    <div class="product">
-      <img src="Img/skincare/mixsoon - Bean Cleansing Oil (100ml).png" alt="Bean Cleansing">
-      <div class="product-info">
-        <h3>mixsoon - Bean Cleansing Oil (100ml)</h3>
-        <p class="price">$25.000 CLP</p>
-        <p class="stock">Stock disponible: 6 unidades</p>
-        <p class="ref-price">Precio referencial: $27.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=mixsoon%20-%20Bean%20Cleansing%20Oil%20(100ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
-      </div>
-    </div>
-    <div class="product">
-      <img src="Img/skincare/mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml).png" alt="mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml)">
-      <div>
-        <h3>mixsoon - Aceite Limpiador Bean Cleansing Oil Mini (20ml)</h3>
-        <p class="price"></p>
-        <p class="stock">Stock disponible: Agotado</p>
-        <p class="ref-price">Precio referencial: $15.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=mixsoon%20-%20Aceite%20Limpiador%20Bean%20Cleansing%20Oil%20Mini%20(20ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
+  <div class="biz-grid">
+    <div class="biz-card">
+      <h3>📌 Bio / descripción corta</h3>
+      <div class="copy-box" id="txt1">🇰🇷 MISEON.CL | K-Beauty ✨ Lo mejor de Corea en Chile: Skin1004, Anua, Tocobo. 🚆 Entrega: Intermodal L2/L4A y Tren Nos. 🚚 Envío GRATIS sobre $80.000. 👇 Pedidos al WhatsApp: 📲 +56958916286</div>
+      <button class="btn-copy" onclick="copyText('txt1',this)">📋 Copiar texto</button>
     </div>
 
-  </div> <!-- Aquí CIERRA el primer producto -->
-    <div class="product">
-      <img src="Img/skincare/SKIN 1004 - Espuma Limpiadora Madagascar Centella Poremizing Deep Cleansing Foam (125ml).png" alt="SKIN1004 Deep Foam">
-      <div>
-        <h3>SKIN 1004 - Espuma Limpiadora Madagascar Centella Poremizing Deep Cleansing Foam (125ml)</h3>
-        <p class="price">$20.000 CLP</p>
-        <p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $22.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Espuma%20Limpiadora%20Madagascar%20Centella%20Poremizing%20Deep%20Cleansing%20Foam%20(125ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
+    <div class="biz-card">
+      <h3>📢 Mensaje para grupos</h3>
+      <div class="copy-box" id="txt2">¡Hola! Si buscas cuidar tu piel con productos coreanos 100% originales, te recomiendo Miseon.cl 🇰🇷✨. Tienen las marcas más virales: Skin1004, Anua, Tocobo y más.
 
-
-      </div>
+📍 Entregas presenciales: Intermodal La Cisterna y estaciones del Tren Nos (San Bernardo a Estación Central).
+🎁 Promoción: ¡Envío a domicilio GRATIS por compras sobre $80.000!
+📱 Pide el catálogo o tu asesoría al WhatsApp: +56 9 5891 6286
+📸 Síguelos en IG: @miseon.cl</div>
+      <button class="btn-copy" onclick="copyText('txt2',this)">📋 Copiar texto</button>
     </div>
-    <div class="product">
-      <img src="Img/skincare/haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml).png" alt="haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml)">
-      <div>
-        <h3>haruharu wonder - Gel Limpiador Black Rice Moisture 5.5 Soft Cleansing Gel (100ml)</h3>
-        <p class="price">$19.000 CLP</p><p class="stock">Stock disponible: 2 unidades</p>
-        <p class="ref-price">Precio referencial: $22.990 CLP</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=haruharu%20wonder%20-%20Gel%20Limpiador%20Black%20Rice%20Moisture%205.5%20Soft%20Cleansing%20Gel%20(100ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
 
+    <div class="biz-card">
+      <h3>💬 Estado de WhatsApp</h3>
+      <div class="copy-box" id="txt3">¡Stock disponible en Miseon.cl! 🧴✨ ¿No sabes qué elegir para tu tipo de piel? Escríbeme y armamos tu rutina.
 
-      </div>
+✅ Entregas: Intermodal y Tren Nos.
+✅ Envíos a todo Chile.
+🚚 Gratis a domicilio sobre $80.000.
+✨ Consultas al: +56958916286</div>
+      <button class="btn-copy" onclick="copyText('txt3',this)">📋 Copiar texto</button>
+    </div>
+
+    <div class="biz-card">
+      <h3>👋 Respuesta automática Instagram</h3>
+      <div class="copy-box" id="txt4">¡Hola! 🌸 Bienvenid@ a Miseon.cl, tu tienda de K-Beauty en Chile 🇰🇷
+
+Tengo todo lo que necesitas para armar tu rutina coreana: Skin1004, Anua, Tocobo, Mixsoon y más ✨
+
+Para ayudarte mejor, dime:
+1️⃣ ¿Cuál es tu tipo de piel? (grasa, seca, mixta, sensible)
+2️⃣ ¿Qué quieres mejorar? (acné, manchas, hidratación, etc.)
+
+Así te armo la rutina perfecta 💕
+📦 Entregas en Intermodal y Tren Nos · Envío gratis +$80.000</div>
+      <button class="btn-copy" onclick="copyText('txt4',this)">📋 Copiar texto</button>
     </div>
   </div>
 
-  <div class="product">
-    <img src="Img/skincare/SKIN 1004 - Crema Facial Madagascar Centella Poremizing Light Gel Cream (75ml).png" alt="Gel Cream">
-    <div class="product-info">
-      <h3>SKIN 1004 - Crema Facial Madagascar Centella Poremizing Light Gel Cream (75ml)</h3>
-      <p class="price">$26.000 CLP</p>
-      <p class="stock">Stock disponible: 3 unidades</p>
-      <p class="ref-price">Precio referencial: $27.990 CLP</p>
-      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20Facial%20Madagascar%20Centella%20Poremizing%20Light%20Gel%20Cream%20(75ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-
+  <div class="card" style="margin-top:20px">
+    <div class="card-title"><span class="bubble"></span>💡 Consejo — Enlace directo de WhatsApp</div>
+    <p style="font-size:0.85rem;color:var(--mid);line-height:1.7">
+      Pon este enlace en tu bio de Instagram para que al hacer clic se abra directamente el chat contigo sin que tengan que guardar el número:
+    </p>
+    <div style="margin-top:12px;background:var(--bg);border:1.5px solid var(--blush);border-radius:10px;padding:12px;font-size:0.9rem;color:var(--blush-deep);font-weight:600;text-align:center;letter-spacing:1px">
+      https://wa.me/56958916286
     </div>
-  </div>
-  <div class="product">
-    <img src="Img/skincare/SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml).png" alt="SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml)">
-    <div class="product-info">
-      <h3>SKIN 1004 - Crema Madagascar Centella Soothing Cream (75ml)</h3>
-      <p class="price">$24.000 CLP</p>
-      <p class="stock">Stock disponible: 1 unidades</p>
-      <p class="ref-price">Precio referencial: $27.990 CLP</p>
-      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20Madagascar%20Centella%20Soothing%20Cream%20(75ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-    </div>
-  </div>
-  <div class="product">
-    <img src="Img/skincare/SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml).png" alt="SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml)">
-    <div class="product-info">
-      <h3>SKIN 1004 - Crema Hidratante con Centella Asiática Madagascar Centella Soothing Cream (30ml)</h3>
-      <p class="price">$13.000 CLP</p>
-      <p class="stock">Stock disponible: 1 unidades</p>
-      <p class="ref-price">Precio referencial: $15.990 CLP</p>
-      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20Hidratante%20con%20Centella%20Asiática%20Madagascar%20Centella%20Soothing%20Cream%20(30ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-    </div>
-  </div>
-  <div class="product">
-    <img src="Img/skincare/SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml).png" alt="SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml)">
-    <div class="product-info">
-      <h3>SKIN 1004 - Crema con Centella Asiática Madagascar Centella Probio-Cica Enrich Cream (50ml)</h3>
-      <p class="price">$28.000</p>
-      <p class="stock">Stock disponible: 2 unidades</p>
-      <p class="ref-price">Precio referencial: $35.990 CLP</p>
-      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20con%20Centella%20Asiática%20Madagascar%20Centella%20Probio-Cica%20Enrich%20Cream%20(50ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-    </div>
-  </div>
-
-  </div>
-  <div class="product">
-    <img src="Img/skincare/SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml).png" alt="SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml)">
-    <div class="product-info">
-      <h3>SKIN 1004 - Crema de Ojos Madagascar Centella Probio-Cica Bakuchiol (20ml)</h3>
-      <p class="price">$21.000</p>
-      <p class="stock">Stock disponible: 6 unidades</p>
-      <p class="ref-price">Precio referencial: $27.990 CLP</p>
-      <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=SKIN%201004%20-%20Crema%20de%20Ojos%20Madagascar%20Centella%20Probio-Cica%20Bakuchiol%20(20ml)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-    </div>
-  </div>
-    <div class="section" id="Cremas">
-    <div class="product">
-      <img src="Img/skincare/Serum Contorno de Ojos Manchas, Ojeras y ArrugasOjeras – Zona Oscura Con Acido Tranexamico y Glutatión -TRANEXAMIC ACID + GLUTATHIONE EYE CREAM – MARY & MAY .png" alt="Tranexamic Acid + Glutathione Eye Cream (Mary & May)">
-      <div class="product-info">
-        <h3>Tranexamic Acid + Glutathione Eye Cream (Mary & May)</h3>
-        <p class="price">$13.000</p>
-        <p class="stock">Stock disponible: 4 unidades</p>
-        <a href="https://forms.gle/VGkPQLn8aZsT66J46?usp=pp_url&entry.123456789=Tranexamic%20Acid%20+%20Glutathione%20Eye%20Cream%20(Mary%20%26%20May)" target="_blank"><button class="btn-instagram" style="margin-top:0.5rem;">Lo quiero</button></a>
-      </div>
-    </div>
-
+    <button class="btn-copy" style="margin-top:10px" onclick="navigator.clipboard.writeText('https://wa.me/56958916286');this.textContent='✅ Copiado!';setTimeout(()=>this.textContent='📋 Copiar enlace',2000)">📋 Copiar enlace</button>
   </div>
 </div>
-   <h3 style="color:#d63384; margin-top:0;">Condiciones para productos "Próximamente"</h3>
-  <div class="condiciones">
- 
-    <ul style="margin:0 0 0 1.2em; padding:0;">
-      <li>El producto estará disponible en un plazo estimado de 1 mes.</li>
-      <li>Para reservar, se requiere un abono del 50% del valor.</li>
-      <li>La información sobre el estado del pedido será clara y transparente en todo momento.</li>
-      <li>Ofrecemos rastreo y acompañamiento personalizado durante todo el proceso.</li>
-    </ul>
-  </div>
 
-  <footer>
-    <p>Sigue nuestro Instagram @miseon.cl | Contáctanos por WhatsApp</p>
-    <a href="https://www.instagram.com/miseon.cl?igsh=d2s0N3RsOXRmZml5" target="_blank">
-      <button class="btn-instagram">Síguenos en Instagram</button>
-    </a>
+<script>
+// ════════════════════════════════
+// PRODUCTS
+// ════════════════════════════════
+const PRODUCTS = [
+  // LIMPIEZA
+  {id:'c1',n:'Mixsoon Bean Cleansing Oil',cat:'clean',bl:'b-clean',bt:'Limpieza',p:20000,d:'Aceite de lujo con extractos fermentados de soja. Disuelve puntos negros, maquillaje y sebo mientras nutre.',sk:['grasa','mixta','normal'],co:['poros','manchas','hidratacion']},
+  {id:'c2',n:'Anua Heartleaf Pore Control Cleansing Oil',cat:'clean',bl:'b-clean',bt:'Limpieza',p:24000,d:'Aceite limpiador con Heartleaf que controla el sebo y limpia poros profundamente sin irritar.',sk:['grasa','mixta'],co:['poros','acne']},
+  {id:'c3',rosacea:true,n:'Tocobo Cleanser (Jabón)',cat:'clean',bl:'b-clean',bt:'Limpieza',p:26000,d:'Limpiador con ingredientes calmantes. Equilibra el pH y deja la piel suave y calmada.',sk:['normal','mixta','sensible'],co:['sensible','hidratacion']},
+  {id:'c4',rosacea:true,n:'B:LAB Matcha Hydrating Foam',cat:'clean',bl:'b-clean',bt:'Limpieza',p:19000,d:'Limpiador hidratante con extracto de Té Verde. Limpia sin resecar ni dejar la piel tirante.',sk:['seca','normal','mixta'],co:['hidratacion','sensible']},
+  {id:'c5',rosacea:true,n:'HaruHaru Wonder Black Rice Cleanser',cat:'clean',bl:'b-clean',bt:'Limpieza',p:19000,d:'Gel suave sin jabón con arroz negro fermentado. Ideal para piel sensible y mañanas.',sk:['seca','sensible','normal'],co:['hidratacion','sensible']},
+  {id:'c6',n:'Skin1004 Poremizing Deep Cleansing Foam',cat:'clean',bl:'b-clean',bt:'Limpieza',p:19000,d:'Espuma de limpieza profunda para poros. Con Sal Rosa del Himalaya para purificar.',sk:['grasa','mixta'],co:['poros','acne']},
+  {id:'c7',rosacea:true,n:'Skin1004 Madagascar Centella Ampoule Foam',cat:'clean',bl:'b-clean',bt:'Limpieza',p:19000,d:'Jabón calmante con Centella Asiática y pH equilibrado. Limpia y calma simultáneamente.',sk:['sensible','normal','mixta'],co:['acne','sensible']},
+  {id:'c8',n:'Skin1004 Tea-Trica BHA Foam',cat:'clean',bl:'b-clean',bt:'Limpieza',p:20000,d:'Limpiador con BHA para control del acné. Desbloquea poros y calma la inflamación.',sk:['grasa','mixta'],co:['acne','poros']},
+  // SOLAR
+  {id:'s1',rosacea:true,n:'Mixsoon Centella Sun Cream',cat:'sun',bl:'b-sun',bt:'Solar',p:24000,d:'Protector con Centella calmante. Hidrata y protege sin dejar rastro blanco.',sk:['sensible','seca','normal'],co:['sensible','hidratacion']},
+  {id:'s2',n:'Skin1004 Hyalu-Cica Water-Fit Sun Serum',cat:'sun',bl:'b-sun',bt:'Solar',p:21000,d:'Textura serum invisible e hidratante. No deja rastro blanco ni grasa.',sk:['grasa','mixta','normal'],co:['acne','sensible']},
+  {id:'s3',rosacea:true,n:'Tocobo Cica Cooling Sun Stick (Verde)',cat:'sun',bl:'b-sun',bt:'Solar',p:21000,d:'Barra de protección con efecto refrescante y calmante. Ideal para piel reactiva.',sk:['sensible','mixta'],co:['sensible','acne']},
+  {id:'s4',n:'Tocobo Cotton Soft Sun Stick (Celeste)',cat:'sun',bl:'b-sun',bt:'Solar',p:21000,d:'Acabado mate tipo algodón. Controla el brillo, ideal para pieles mixtas.',sk:['grasa','mixta'],co:['poros']},
+  {id:'s5',n:'Skin1004 Probio-Cica Glow Sun Ampoule',cat:'sun',bl:'b-sun',bt:'Solar',p:22000,d:'Protección solar con efecto iluminador. Acabado "glass skin" y Centella reparadora.',sk:['seca','normal'],co:['manchas','envejecimiento','hidratacion']},
+  {id:'s6',n:'Skin1004 Hyalu-Cica Silky-Fit Sun Stick',cat:'sun',bl:'b-sun',bt:'Solar',p:21000,d:'Barra de acabado sedoso y liviano. Perfecta para reaplicar durante el día.',sk:['normal','mixta','grasa'],co:['acne','poros']},
+  // SERUMS
+  {id:'se1',n:'Mixsoon Bean Essence (50ml)',cat:'serum',bl:'b-serum',bt:'Esencia',p:40000,d:'Esencia viral multifunción con soja fermentada. Exfolia, hidrata y controla poros.',sk:['grasa','mixta','normal'],co:['poros','manchas','hidratacion']},
+  {id:'se2',n:'Celimax Retinal Serum',cat:'serum',bl:'b-serum',bt:'Sérum',p:24000,d:'Retinal de nueva generación más suave que el retinol. Renueva textura y tono.',sk:['normal','seca','mixta'],co:['envejecimiento','manchas']},
+  {id:'se3',rosacea:true,n:'Purito Serum (Grande)',cat:'serum',bl:'b-serum',bt:'Sérum',p:28000,d:'Sérum calmante con Centella. Calma irritaciones y refuerza la barrera cutánea.',sk:['sensible','seca','normal'],co:['sensible','hidratacion']},
+  {id:'se4',rosacea:true,n:'Purito Serum (Pequeño)',cat:'serum',bl:'b-serum',bt:'Sérum',p:10000,d:'Versión mini del sérum Purito. Ideal para probar o llevar de viaje.',sk:['sensible','seca','normal'],co:['sensible','hidratacion']},
+  {id:'se5',n:'Skin1004 Brightening Capsule Ampoule',cat:'serum',bl:'b-serum',bt:'Sérum',p:25000,d:'Cápsulas iluminadoras para un rostro radiante y tono uniforme.',sk:['normal','mixta','grasa'],co:['manchas','envejecimiento']},
+  {id:'se6',n:'Skin1004 Tea-Trica Relief Ampoule',cat:'serum',bl:'b-serum',bt:'Sérum',p:30000,d:'Tratamiento SOS para acné. Calma inflamaciones activas sin resecar.',sk:['grasa','mixta'],co:['acne']},
+  {id:'se7',n:'Skin1004 Poremizing Fresh Ampoule',cat:'serum',bl:'b-serum',bt:'Sérum',p:30000,d:'Sal Rosa del Himalaya para minimizar poros y mejorar la elasticidad.',sk:['grasa','mixta'],co:['poros','acne']},
+  {id:'se8',rosacea:true,n:'Skin1004 Probio-Cica Intensive Ampoule (50ml)',cat:'serum',bl:'b-serum',bt:'Sérum',p:28000,d:'Reparación profunda con Centella fermentada y probióticos. Para barreras dañadas.',sk:['seca','sensible'],co:['hidratacion','sensible','envejecimiento']},
+  {id:'se9',n:'Skin1004 Niacinamide 10% Shot (Microagujas)',cat:'serum',bl:'b-serum',bt:'Sérum',p:28000,d:'Alta concentración de Niacinamida para iluminar y reducir manchas con microagujas botánicas.',sk:['grasa','mixta','normal'],co:['manchas','poros']},
+  {id:'se10',n:'Skin1004 0.2 Retinol Shot Ampoule',cat:'serum',bl:'b-serum',bt:'Sérum',p:32000,d:'Renovador nocturno potente con retinol al 0.2%. Reduce líneas y mejora textura.',sk:['normal','mixta'],co:['envejecimiento','manchas']},
+  {id:'se11',n:'Skin1004 Matrixyl 10 Boosting Shot (Microagujas)',cat:'serum',bl:'b-serum',bt:'Sérum',p:26000,d:'Micro-agujas botánicas con Matrixyl que estimulan el colágeno. Efecto lifting visible.',sk:['normal','seca','mixta'],co:['envejecimiento']},
+  // CREMAS
+  {id:'cr1',n:'Dr. Althea 345 Relief Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:34000,d:'Ungüento regenerador para acné y post-tratamiento. Reduce marcas y rojeces rápidamente.',sk:['sensible','seca'],co:['acne','sensible','manchas']},
+  {id:'cr2',rosacea:true,n:'Barr Centella Calming Barrier Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:30000,d:'Especial para rosácea y piel extremadamente sensible. Alivia el ardor e inflamación crónica.',sk:['sensible'],co:['sensible']},
+  {id:'cr3',rosacea:true,n:'Centellian 24 Madeca Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:30000,d:'Reparación total coreana. Estimula colágeno y sana marcas o cicatrices de acné.',sk:['seca','sensible','normal'],co:['acne','manchas','sensible','envejecimiento']},
+  {id:'cr4',n:'Axis-Y Dark Spot Correcting Glow Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:30000,d:'Favorita para manchas y marcas de acné. Aporta brillo saludable.',sk:['normal','mixta','seca'],co:['manchas','envejecimiento']},
+  {id:'cr5',rosacea:true,n:'Axis-Y Panthenol 10 Smoothing Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:24000,d:'Barrera protectora con 10% Pantenol. Suaviza la piel áspera y fortalece la defensa.',sk:['seca','sensible','normal'],co:['hidratacion','sensible']},
+  {id:'cr6',n:'HaruHaru Black Rice Hyaluronic Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:26000,d:'Bomba de hidratación con arroz negro fermentado y hialurónico. Previene envejecimiento.',sk:['seca','normal'],co:['hidratacion','envejecimiento']},
+  {id:'cr7',n:'Skin1004 Poremizing Fresh Light Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:26000,d:'Hidratación ligera que controla el brillo y ayuda a cerrar poros. Acabado mate fresco.',sk:['grasa','mixta'],co:['poros','acne']},
+  {id:'cr8',rosacea:true,n:'Dr. Jart+ Cicapair Color Correcting',cat:'cream',bl:'b-cream',bt:'Crema',p:50000,d:'Neutraliza rojeces cambiando de verde a beige. Protege, repara y unifica el tono.',sk:['sensible'],co:['sensible','manchas']},
+  {id:'cr9',n:'Medicube TXA Niacinamide 5% Capsule Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:36000,d:'Cápsulas de alta tecnología para manchas persistentes e hiperpigmentación.',sk:['normal','mixta','grasa'],co:['manchas']},
+  {id:'cr10',n:'Skin1004 Centella Soothing Gel (Grande)',cat:'cream',bl:'b-cream',bt:'Crema',p:24000,d:'Gel refrescante con ceramidas y Centella. Calma y sella la humedad sin grasa.',sk:['grasa','mixta','normal'],co:['acne','sensible','hidratacion']},
+  {id:'cr11',n:'Skin1004 Centella Soothing Gel (Pequeño)',cat:'cream',bl:'b-cream',bt:'Crema',p:13000,d:'Versión mini del gel Centella. Ideal para llevar o probar.',sk:['grasa','mixta','normal'],co:['acne','sensible','hidratacion']},
+  {id:'cr12',rosacea:true,n:'Skin1004 Probio-Cica Enrich Cream',cat:'cream',bl:'b-cream',bt:'Crema',p:28000,d:'Crema rica reparadora con Centella fermentada. Reconstruye la barrera cutánea.',sk:['seca','sensible'],co:['hidratacion','sensible','envejecimiento']},
+  // TÓNICOS
+  {id:'t1',n:'Skin1004 Poremizing Clear Toner (Grande)',cat:'toner',bl:'b-toner',bt:'Tónico',p:26000,d:'Tónico exfoliante con Sal Rosa y AHA/BHA. Limpia poros y refina la textura.',sk:['grasa','mixta'],co:['poros','acne','manchas']},
+  {id:'t2',n:'Anua Rice 70 Glow Milk Toner (Pequeño)',cat:'toner',bl:'b-toner',bt:'Tónico',p:12000,d:'Tónico lechoso con 70% extracto de arroz. Brillo radiante y nutrición al instante.',sk:['seca','normal'],co:['manchas','hidratacion','envejecimiento']},
+  {id:'t3',n:'Isntree Green Tea Fresh Toner',cat:'toner',bl:'b-toner',bt:'Tónico',p:20000,d:'Con 80% de Té Verde de Jeju. Controla el sebo y refresca pieles grasas.',sk:['grasa','mixta'],co:['poros','acne']},
+  {id:'t4',rosacea:true,n:'Dr. Althea 345 Relief Toner',cat:'toner',bl:'b-toner',bt:'Tónico',p:28000,d:'Para piel sensible y acné. Alivia la irritación y prepara la barrera.',sk:['sensible','seca'],co:['acne','sensible','hidratacion']},
+  {id:'t5',n:'Round Lab 1025 Dokdo Toner',cat:'toner',bl:'b-toner',bt:'Tónico',p:15000,d:'El #1 de Corea. Agua de mar profundo y pantenol para hidratación equilibrada.',sk:['normal','mixta','grasa','seca'],co:['hidratacion','poros']},
+  {id:'t6',rosacea:true,n:'Skin1004 Hyalu-Cica Cloudy Mist',cat:'toner',bl:'b-toner',bt:'Bruma',p:24000,d:'Bruma ultra fina hidratante y calmante. Ideal sobre el maquillaje o durante el día.',sk:['seca','sensible','normal'],co:['hidratacion','sensible']},
+  // OJOS & MASCARILLAS
+  {id:'e1',n:'Mary & May Eye Cream',cat:'eye',bl:'b-eye',bt:'Contorno',p:13000,d:'Ilumina ojeras con Ácido Tranexámico y Glutatión. Reduce la pigmentación.',sk:['normal','mixta','grasa','seca','sensible'],co:['manchas','envejecimiento']},
+  {id:'e2',n:'Beauty of Joseon Revive Eye Serum',cat:'eye',bl:'b-eye',bt:'Contorno',p:21000,d:'Con Ginseng y Retinal. Combate arrugas y devuelve elasticidad al contorno de ojos.',sk:['normal','seca','mixta'],co:['envejecimiento']},
+  {id:'e3',n:'Beauty of Joseon Eye Serum (Pequeño)',cat:'eye',bl:'b-eye',bt:'Contorno',p:6000,d:'Versión mini del sérum de ojos Beauty of Joseon. Para probar o regalar.',sk:['normal','seca','mixta'],co:['envejecimiento']},
+  {id:'e4',n:'Beauty of Joseon Red Bean Pore Mask',cat:'mask',bl:'b-mask',bt:'Mascarilla',p:25000,d:'Exfoliante de porotos rojos. Absorbe impurezas y deja una frescura total.',sk:['grasa','mixta','normal'],co:['poros','acne']},
+  {id:'e5',rosacea:true,n:'Skin1004 Probio-Cica Bakuchiol Eye Cream',cat:'eye',bl:'b-eye',bt:'Contorno',p:21000,d:'Alternativa natural al retinol. Reafirma e hidrata el contorno sin irritar.',sk:['sensible','seca'],co:['envejecimiento','sensible']},
+];
 
-  </footer>
+const SKIN_MAP={'Grasa — brillo en toda la cara, poros visibles':'grasa','Seca — tirante, sin brillo, a veces descama':'seca','Mixta — zona T grasa, mejillas normales o secas':'mixta','Normal — equilibrada, sin problemas evidentes':'normal','Sensible — reacciona fácil, rojeces, arde con productos':'sensible','Rosácea — enrojecimiento persistente, venas visibles, ardor':'rosacea'};
+const CONC_MAP={'Acné activo o granitos frecuentes':'acne','Manchas e hiperpigmentación, marcas de acné':'manchas','Poros dilatados y textura irregular':'poros','Piel sensible, rojeces o irritación frecuente':'sensible','Falta de hidratación, barrera cutánea débil':'hidratacion','Envejecimiento, arrugas o pérdida de firmeza':'envejecimiento'};
+
+// ── Quiz ──
+let ans=[null,null,null,null];
+function pick(i,el,v){
+  el.closest('.skin-options').querySelectorAll('.skin-opt').forEach(o=>o.classList.remove('selected'));
+  el.classList.add('selected');
+  ans[i]=v;
+  document.getElementById('qb'+i).disabled=false;
+}
+function goNext(n){
+  document.getElementById('qs'+(n-1)).style.display='none';
+  document.getElementById('qs'+n).style.display='block';
+  document.getElementById('qp'+n).classList.add('done');
+}
+function goPrev(n){
+  document.getElementById('qs'+(n+1)).style.display='none';
+  document.getElementById('qs'+n).style.display='block';
+}
+function resetQuiz(){
+  ans=[null,null,null,null];
+  document.querySelectorAll('.quiz-step').forEach((s,i)=>{s.style.display=i===0?'block':'none';});
+  document.querySelectorAll('.qpdot').forEach((d,i)=>{d.classList.toggle('done',i===0);});
+  document.querySelectorAll('.skin-opt').forEach(o=>o.classList.remove('selected'));
+  [0,1,2,3].forEach(i=>{const b=document.getElementById('qb'+i);if(b)b.disabled=true;});
+  document.getElementById('quiz-wrap').style.display='block';
+  document.getElementById('ai-result').style.display='none';
+  document.getElementById('ai-content').style.display='none';
+}
+
+async function runAI(){
+  document.getElementById('quiz-wrap').style.display='none';
+  document.getElementById('ai-result').style.display='block';
+  document.getElementById('ai-loading').style.display='block';
+  document.getElementById('ai-content').style.display='none';
+
+  const skinKey=SKIN_MAP[ans[0]]||'normal';
+  const prodList=PRODUCTS.map(p=>`${p.n}|$${p.p.toLocaleString('es-CL')}|${p.bt}|pieles:${p.sk.join(',')}|concerns:${p.co.join(',')}`).join('\n');
+
+  const prompt=`Eres dermatóloga especializada en K-beauty con 15 años de experiencia. Responde SOLO con JSON válido sin markdown ni texto extra.
+
+Perfil cliente:
+- Tipo de piel: ${ans[0]}${SKIN_MAP[ans[0]]==='rosacea'?' (piel con rosácea — evitar activos irritantes, alcohol, fragancia, retinol, AHA/BHA en exceso. Priorizar Centella, Niacinamida suave, Pantenol, calendula)':''}
+- Preocupación: ${ans[1]}
+- Nivel rutina: ${ans[2]}
+- Tiempo: ${ans[3]}
+
+Catálogo Miseon.cl (nombre|precio|categoría|pieles|concerns):
+${prodList}
+
+JSON exacto a responder:
+{
+  "skinEmoji":"emoji tipo piel",
+  "skinTypeName":"nombre tipo de piel en español",
+  "skinSummary":"resumen 2 oraciones qué significa para el cuidado",
+  "recommendations":[
+    {"productName":"nombre exacto del catálogo","priority":"esencial|recomendado|complementario","why":"1-2 oraciones por qué es ideal para ESTE perfil"}
+  ],
+  "routine":[
+    {"step":1,"time":"AM|PM|AM/PM","type":"categoría","product":"nombre exacto","tip":"consejo aplicación"}
+  ],
+  "dermNote":"nota dermatológica 3-4 oraciones con consejos, ingredientes a buscar",
+  "warnings":"ingredientes o hábitos a evitar"
+}
+
+Selecciona 4-7 recomendaciones y 4-6 pasos de rutina ajustados al tiempo disponible. Prioriza los más importantes.`;
+
+  try{
+    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
+    const data=await res.json();
+    const txt=data.content.map(i=>i.text||'').join('');
+    const clean=txt.replace(/```json|```/g,'').trim();
+    renderResult(JSON.parse(clean));
+  }catch(e){renderFallback(skinKey,CONC_MAP[ans[1]]||'hidratacion');}
+}
+
+function renderResult(r){
+  document.getElementById('ai-loading').style.display='none';
+  document.getElementById('ai-content').style.display='block';
+  document.getElementById('skin-profile').innerHTML=`<div class="skin-emoji-wrap">${r.skinEmoji}</div><div><h2>${r.skinTypeName}</h2><p>${r.skinSummary}</p></div>`;
+  const grid=document.getElementById('prod-grid');
+  grid.innerHTML='';
+  r.recommendations.forEach(rec=>{
+    const prod=PRODUCTS.find(p=>p.n===rec.productName);
+    if(!prod)return;
+    const pc=rec.priority==='esencial'?'p-esencial':rec.priority==='recomendado'?'p-recomendado':'p-complementario';
+    const pl=rec.priority==='esencial'?'★ Esencial':rec.priority==='recomendado'?'◎ Recomendado':'○ Complementario';
+    grid.innerHTML+=`<div class="prod-card"><span class="prod-badge ${prod.bl}">${prod.bt}</span><div class="prod-name">${prod.n}</div><div class="prod-why">💡 ${rec.why}</div><div class="prod-footer"><span class="prod-price">$${prod.p.toLocaleString('es-CL')}</span><span class="priority-label ${pc}">${pl}</span></div></div>`;
+  });
+  const rs=document.getElementById('routine-steps');
+  rs.innerHTML='';
+  r.routine.forEach(s=>{rs.innerHTML+=`<div class="routine-step"><div class="step-circle">${s.step}</div><div><div class="step-type">${s.time} · ${s.type}</div><div class="step-prod">${s.product}</div><div class="step-tip">${s.tip}</div></div></div>`;});
+  document.getElementById('derm-notes').innerHTML=`<p>${r.dermNote}</p>${r.warnings?`<div class="warn-box">⚠️ <strong>Evitar:</strong> ${r.warnings}</div>`:''}`;
+}
+
+function renderFallback(sk,co){
+  const f=PRODUCTS.filter(p=>p.sk.includes(sk)&&p.co.includes(co)).slice(0,5);
+  renderResult({skinEmoji:'🌸',skinTypeName:'Tu perfil de piel',skinSummary:'Basado en tus respuestas, seleccionamos los productos más adecuados de Miseon.cl.',recommendations:f.map((p,i)=>({productName:p.n,priority:i<2?'esencial':'recomendado',why:'Ideal para tu tipo de piel y preocupaciones.'})),routine:f.slice(0,4).map((p,i)=>({step:i+1,time:'AM/PM',type:p.bt,product:p.n,tip:'Aplica con movimientos suaves, de dentro hacia afuera.'})),dermNote:'Recuerda siempre usar protector solar durante el día y ser constante con tu rutina. La K-beauty se basa en capas ligeras y paciencia.',warnings:'Evita cambiar muchos productos a la vez para no irritar la piel.'});
+}
+
+// ── Calculator ──
+let sh='free',tblRows=[];
+function setSh(m){sh=m;document.getElementById('sb_free').classList.toggle('active',m==='free');document.getElementById('sb_std').classList.toggle('active',m==='std');calc();}
+const fmt=n=>'$'+Math.round(n).toLocaleString('es-CL');
+function costo(u,q,tc,ex){return(u*q+(sh==='std'?8:0))/q*tc+ex;}
+function precio(c,mg,fee){const d=1-fee/100-mg/100;return d<=0?c*3:c/d;}
+function calc(){
+  const tc=+document.getElementById('tc').value||950;
+  const u=+document.getElementById('c_usd').value||0;
+  const q=+document.getElementById('c_qty').value||1;
+  const mg=+document.getElementById('c_mg').value||40;
+  const fee=+document.getElementById('c_fee').value||0;
+  const ex=+document.getElementById('c_extra').value||0;
+  const c=costo(u,q,tc,ex),p=precio(c,mg,fee),com=p*fee/100,g=p-c-com,mr=p>0?g/p*100:0;
+  document.getElementById('r_c').textContent=fmt(c);
+  document.getElementById('r_p').textContent=fmt(p);
+  document.getElementById('r_g').textContent=fmt(g);
+  document.getElementById('r_mr').textContent=mr.toFixed(1)+'%';
+  document.getElementById('r_min').textContent=fmt(c/(1-fee/100));
+  document.getElementById('r_tot').textContent=fmt(g*q);
+  const tot=c+com+g;
+  if(tot>0){document.getElementById('b_c').style.width=(c/tot*100).toFixed(1)+'%';document.getElementById('b_f').style.width=(com/tot*100).toFixed(1)+'%';document.getElementById('b_g').style.width=Math.max(0,g/tot*100).toFixed(1)+'%';}
+  const pl=fee===0?'Facebook Marketplace':'esta plataforma';
+  document.getElementById('r_recom').innerHTML=mr<15?`⚠️ Margen <strong>${mr.toFixed(1)}%</strong> muy ajustado. Sube a al menos 30%.`:mr<30?`📌 Margen <strong>${mr.toFixed(1)}%</strong> en ${pl}. Apunta a 35–40% para crecer cómodo.`:`✅ ¡Excelente! <strong>${mr.toFixed(1)}%</strong> en ${pl}. Precio: <strong>${fmt(p)}</strong> 🚀`;
+  renderTbl();
+}
+function addRow(){tblRows.push({n:'Producto '+(tblRows.length+1),u:10,q:1});renderTbl();}
+function renderTbl(){
+  const tc=+document.getElementById('tc').value||950,mg=+document.getElementById('c_mg').value||40,fee=+document.getElementById('c_fee').value||0,ex=+document.getElementById('c_extra').value||0;
+  const u=+document.getElementById('c_usd').value||0,q=+document.getElementById('c_qty').value||1;
+  const c0=costo(u,q,tc,ex),p0=precio(c0,mg,fee),g0=p0-c0-p0*fee/100;
+  let h=`<tr style="background:rgba(242,196,206,0.08)"><td><strong style="color:var(--blush-deep)">★ Actual</strong></td><td>${u.toFixed(2)}</td><td>${q}</td><td>${fmt(c0)}</td><td style="color:var(--blush-deep);font-weight:600">${fmt(p0)}</td><td style="color:var(--sage-deep);font-weight:600">${fmt(g0)}</td><td></td></tr>`;
+  tblRows.forEach((r,i)=>{const ci=costo(r.u,r.q,tc,ex),pi=precio(ci,mg,fee),gi=pi-ci-pi*fee/100;h+=`<tr><td><input style="background:none;border:none;color:var(--text);font-size:0.8rem;width:110px;font-family:'Quicksand',sans-serif" value="${r.n}" onchange="tblRows[${i}].n=this.value"></td><td><input type="number" style="background:none;border:none;color:var(--blush-deep);font-size:0.8rem;width:52px;font-family:'Quicksand',sans-serif" value="${r.u}" min="0" step="0.5" onchange="tblRows[${i}].u=+this.value||0;renderTbl()"></td><td><input type="number" style="background:none;border:none;color:var(--text);font-size:0.8rem;width:32px;font-family:'Quicksand',sans-serif" value="${r.q}" min="1" onchange="tblRows[${i}].q=+this.value||1;renderTbl()"></td><td>${fmt(ci)}</td><td style="color:var(--blush-deep);font-weight:600">${fmt(pi)}</td><td style="color:var(--sage-deep);font-weight:600">${fmt(gi)}</td><td><button class="btn-del-row" onclick="tblRows.splice(${i},1);renderTbl()">✕</button></td></tr>`;});
+  document.getElementById('tbl_body').innerHTML=h;
+}
+
+// ── Inventory ──
+function renderInv(){
+  const cats=[{k:'clean',l:'🧼 Limpieza'},{k:'sun',l:'☀️ Protección Solar'},{k:'serum',l:'✨ Sérums y Esencias'},{k:'cream',l:'🍦 Cremas y Humectantes'},{k:'toner',l:'💧 Tónicos y Brumas'},{k:'eye',l:'👀 Ojos y Contorno'},{k:'mask',l:'🧖 Mascarillas'}];
+  const el=document.getElementById('inv-container');
+  el.innerHTML='';
+  cats.forEach(cat=>{
+    const ps=PRODUCTS.filter(p=>p.cat===cat.k);
+    if(!ps.length)return;
+    el.innerHTML+=`<div class="card"><div class="inv-header">${cat.l}</div><div class="prod-grid">${ps.map(p=>`<div class="prod-card"><span class="prod-badge ${p.bl}">${p.bt}</span><div class="prod-name">${p.n}</div><div class="prod-footer"><span class="prod-price">$${p.p.toLocaleString('es-CL')}</span><span style="font-size:0.65rem;color:var(--soft);text-transform:uppercase;letter-spacing:1px">${p.sk.join('·')}</span></div></div>`).join('')}</div></div>`;
+  });
+}
+
+// ── Copy ──
+function copyText(id,btn){
+  const txt=document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt).then(()=>{
+    btn.textContent='✅ ¡Copiado!';
+    btn.classList.add('copied');
+    setTimeout(()=>{btn.textContent='📋 Copiar texto';btn.classList.remove('copied');},2500);
+  });
+}
+
+// ── Tabs ──
+function showTab(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  el.classList.add('active');
+  if(id==='inventory')renderInv();
+  if(id==='calc')calc();
+}
+
+calc();
+</script>
 </body>
 </html>
-
-
