@@ -545,85 +545,6 @@ tr:hover td{background:var(--bg2);}
   </div>
 </div>
 
-<!-- ═══ TAB: CALC ═══ -->
-<div class="section" id="tab-calc" style="display:none!important">
-  <p class="eyebrow">Herramienta de precios</p>
-  <h2 class="section-h">Calculadora de Precios</h2>
-  <p class="section-sub">Calcula el precio ideal para vender en Facebook Marketplace.</p>
-
-  <div class="rate-bar">
-    <span>💱 USD → CLP</span>
-    <input class="rate-input" type="number" id="tc" value="950" min="1" oninput="calc()">
-    <span>CLP / dólar</span>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <div class="card-title"><span class="bubble"></span>Costos</div>
-      <label>Precio YesStyle (USD)</label>
-      <input type="number" id="c_usd" value="15" min="0" step="0.01" oninput="calc()">
-      <label>Cantidad</label>
-      <input type="number" id="c_qty" value="3" min="1" oninput="calc()">
-      <label>Envío desde Corea</label>
-      <div class="ship-toggle">
-        <div class="ship-btn active" id="sb_free" onclick="setSh('free')">✈️ Gratis</div>
-        <div class="ship-btn" id="sb_std" onclick="setSh('std')">📦 USD $8</div>
-      </div>
-      <label style="margin-top:14px">Embalaje extras (CLP)</label>
-      <input type="number" id="c_extra" value="500" min="0" oninput="calc()">
-    </div>
-    <div class="card">
-      <div class="card-title"><span class="bubble"></span>Estrategia</div>
-      <label>Plataforma</label>
-      <select id="c_fee" onchange="calc()">
-        <option value="0" selected>Facebook Marketplace 🎉 Sin comisión</option>
-        <option value="13">Mercado Libre Clásica 13%</option>
-        <option value="16">Mercado Libre Premium 16%</option>
-        <option value="6.5">Mercado Libre Básica 6.5%</option>
-      </select>
-      <label>Margen: <span id="mg_lbl">40</span>%</label>
-      <input type="range" id="c_mg" min="10" max="120" value="40"
-        oninput="document.getElementById('mg_lbl').textContent=this.value;document.getElementById('mg_show').textContent=this.value+'%';calc()">
-      <span style="font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--blush-deep)" id="mg_show">40%</span>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="bubble"></span>Resultado por Unidad</div>
-    <div class="grid3">
-      <div class="result-box"><div class="rl">Costo unit.</div><div class="rv" id="r_c">—</div></div>
-      <div class="result-box box-blush"><div class="rl">Precio venta</div><div class="rv" id="r_p">—</div></div>
-      <div class="result-box box-sage"><div class="rl">Ganancia neta</div><div class="rv" id="r_g">—</div></div>
-      <div class="result-box box-lav"><div class="rl">Margen real</div><div class="rv" id="r_mr">—</div></div>
-      <div class="result-box"><div class="rl">Precio mínimo</div><div class="rv" id="r_min">—</div></div>
-      <div class="result-box"><div class="rl">Ganancia total</div><div class="rv" id="r_tot" style="color:var(--peach-deep)">—</div></div>
-    </div>
-    <div class="bbar">
-      <div class="bseg" id="b_c" style="background:var(--sage)"></div>
-      <div class="bseg" id="b_f" style="background:var(--lavender)"></div>
-      <div class="bseg" id="b_g" style="background:var(--blush-deep)"></div>
-    </div>
-    <div class="blegend">
-      <span><span class="ldot" style="background:var(--sage)"></span>Costo</span>
-      <span><span class="ldot" style="background:var(--lavender)"></span>Comisión</span>
-      <span><span class="ldot" style="background:var(--blush-deep)"></span>Ganancia</span>
-    </div>
-    <div class="recom" id="r_recom"></div>
-    <p class="note">* Facebook Marketplace no cobra comisión. Si cambias de plataforma, actualiza el selector.</p>
-  </div>
-
-  <div class="card">
-    <div class="card-title"><span class="bubble"></span>Comparador de Productos</div>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Producto</th><th>USD</th><th>Und.</th><th>Costo CLP</th><th>Precio venta</th><th>Ganancia</th><th></th></tr></thead>
-        <tbody id="tbl_body"></tbody>
-      </table>
-    </div>
-    <button class="btn-add-row" onclick="addRow()">+ Agregar producto</button>
-  </div>
-</div>
-
 <!-- ═══ TAB: INVENTORY ═══ -->
 <div class="section" id="tab-inventory">
   <p class="eyebrow">Catálogo Miseon.cl</p>
@@ -708,7 +629,7 @@ Así te armo la rutina perfecta 💕
 
 <script>
 // ════════════════════════════════
-// PRODUCTS
+// PRODUCTS CATALOG
 // ════════════════════════════════
 const PRODUCTS = [
   // LIMPIEZA
@@ -767,8 +688,22 @@ const PRODUCTS = [
   {id:'e5',rosacea:true,n:'Skin1004 Probio-Cica Bakuchiol Eye Cream',cat:'eye',bl:'b-eye',bt:'Contorno',p:21000,d:'Alternativa natural al retinol. Reafirma e hidrata el contorno sin irritar.',sk:['sensible','seca'],co:['envejecimiento','sensible']},
 ];
 
-const SKIN_MAP={'Grasa — brillo en toda la cara, poros visibles':'grasa','Seca — tirante, sin brillo, a veces descama':'seca','Mixta — zona T grasa, mejillas normales o secas':'mixta','Normal — equilibrada, sin problemas evidentes':'normal','Sensible — reacciona fácil, rojeces, arde con productos':'sensible','Rosácea — enrojecimiento persistente, venas visibles, ardor':'rosacea'};
-const CONC_MAP={'Acné activo o granitos frecuentes':'acne','Manchas e hiperpigmentación, marcas de acné':'manchas','Poros dilatados y textura irregular':'poros','Piel sensible, rojeces o irritación frecuente':'sensible','Falta de hidratación, barrera cutánea débil':'hidratacion','Envejecimiento, arrugas o pérdida de firmeza':'envejecimiento'};
+const SKIN_MAP={
+  'Grasa — brillo en toda la cara, poros visibles':'grasa',
+  'Seca — tirante, sin brillo, a veces descama':'seca',
+  'Mixta — zona T grasa, mejillas normales o secas':'mixta',
+  'Normal — equilibrada, sin problemas evidentes':'normal',
+  'Sensible — reacciona fácil, rojeces, arde con productos':'sensible',
+  'Rosácea — enrojecimiento persistente, venas visibles, ardor':'rosacea'
+};
+const CONC_MAP={
+  'Acné activo o granitos frecuentes':'acne',
+  'Manchas e hiperpigmentación, marcas de acné':'manchas',
+  'Poros dilatados y textura irregular':'poros',
+  'Piel sensible, rojeces o irritación frecuente':'sensible',
+  'Falta de hidratación, barrera cutánea débil':'hidratacion',
+  'Envejecimiento, arrugas o pérdida de firmeza':'envejecimiento'
+};
 
 // ── Quiz ──
 let ans=[null,null,null,null];
@@ -798,145 +733,342 @@ function resetQuiz(){
   document.getElementById('ai-content').style.display='none';
 }
 
+// ════════════════════════════════
+// SMART FALLBACK — picks best product per category
+// ════════════════════════════════
+function getBestPerCategory(skinKey, concKey, isRosacea) {
+  const cats = ['clean','toner','serum','cream','sun'];
+  const result = [];
+
+  cats.forEach(cat => {
+    // Filter by category
+    let pool = PRODUCTS.filter(p => p.cat === cat);
+
+    // For rosacea: only rosacea-safe products
+    if (isRosacea) {
+      const rPool = pool.filter(p => p.rosacea === true);
+      if (rPool.length) pool = rPool;
+    }
+
+    // Score each product
+    const scored = pool.map(p => {
+      let score = 0;
+      // Exact skin match
+      if (p.sk.includes(skinKey)) score += 3;
+      // Broader matches (sensible/rosacea share concerns)
+      if (skinKey === 'rosacea' && p.sk.includes('sensible')) score += 2;
+      if (skinKey === 'sensible' && p.sk.includes('normal')) score += 1;
+      // Concern match
+      if (concKey && p.co.includes(concKey)) score += 2;
+      // rosacea marker bonus
+      if (isRosacea && p.rosacea) score += 1;
+      return {p, score};
+    });
+
+    // Sort by score desc, pick best
+    scored.sort((a,b)=>b.score-a.score);
+    if (scored.length > 0) {
+      const best = scored[0].p;
+      result.push(best);
+    }
+  });
+
+  return result;
+}
+
+// ════════════════════════════════
+// AI CALL — improved prompt
+// ════════════════════════════════
 async function runAI(){
   document.getElementById('quiz-wrap').style.display='none';
   document.getElementById('ai-result').style.display='block';
   document.getElementById('ai-loading').style.display='block';
   document.getElementById('ai-content').style.display='none';
 
-  const skinKey=SKIN_MAP[ans[0]]||'normal';
-  const prodList=PRODUCTS.map(p=>`${p.n}|$${p.p.toLocaleString('es-CL')}|${p.bt}|pieles:${p.sk.join(',')}|concerns:${p.co.join(',')}`).join('\n');
+  const skinKey = SKIN_MAP[ans[0]] || 'normal';
+  const concKey = CONC_MAP[ans[1]] || 'hidratacion';
+  const isRosacea = skinKey === 'rosacea';
 
-  const prompt=`Eres dermatóloga especializada en K-beauty con 15 años de experiencia. Responde SOLO con JSON válido sin markdown ni texto extra.
+  // Build the catalog list grouped by category for clarity
+  const catLabels = {clean:'LIMPIEZA',sun:'SOLAR',serum:'SÉRUM/ESENCIA',cream:'CREMA/GEL',toner:'TÓNICO/BRUMA',eye:'OJOS',mask:'MASCARILLA'};
+  let prodList = '';
+  Object.keys(catLabels).forEach(cat => {
+    const ps = PRODUCTS.filter(p => p.cat === cat);
+    prodList += `\n[${catLabels[cat]}]\n`;
+    ps.forEach(p => {
+      prodList += `- ${p.n} | $${p.p.toLocaleString('es-CL')} | pieles:${p.sk.join(',')} | concerns:${p.co.join(',')}${p.rosacea?' | APTO_ROSACEA':''}\n`;
+    });
+  });
 
-Perfil cliente:
-- Tipo de piel: ${ans[0]}${SKIN_MAP[ans[0]]==='rosacea'?' (piel con rosácea — evitar activos irritantes, alcohol, fragancia, retinol, AHA/BHA en exceso. Priorizar Centella, Niacinamida suave, Pantenol, calendula)':''}
-- Preocupación: ${ans[1]}
-- Nivel rutina: ${ans[2]}
-- Tiempo: ${ans[3]}
+  const levelText = ans[2] && ans[2].includes('Principiante') ? 'principiante' : ans[2] && ans[2].includes('Avanzado') ? 'avanzado' : 'intermedio';
+  const timeText = ans[3] && ans[3].includes('5 minutos') ? 'menos de 5 minutos' : ans[3] && ans[3].includes('15 minutos') ? 'entre 5 y 15 minutos' : 'más de 15 minutos';
 
-Catálogo Miseon.cl (nombre|precio|categoría|pieles|concerns):
+  const rosaceaNote = isRosacea
+    ? `RESTRICCIONES CRÍTICAS para rosácea: SOLO recomendar productos marcados APTO_ROSACEA. Evitar absolutamente: alcohol, fragancia, retinol, AHA, BHA, activos irritantes. Priorizar Centella Asiática, Niacinamida suave, Pantenol, Bakuchiol.`
+    : ``;
+
+  const prompt = `Eres una dermatóloga especializada en K-beauty con 15 años de experiencia. Responde ÚNICAMENTE con JSON válido, sin markdown, sin texto extra antes o después.
+
+PERFIL DE LA CLIENTA:
+- Tipo de piel: ${ans[0]}
+- Preocupación principal: ${ans[1]}
+- Nivel de experiencia en skincare: ${levelText}
+- Tiempo disponible para rutina: ${timeText}
+${rosaceaNote}
+
+CATÁLOGO COMPLETO MISEON.CL (usa EXACTAMENTE estos nombres):
 ${prodList}
 
-JSON exacto a responder:
+REGLAS OBLIGATORIAS:
+1. Debes incluir AL MENOS UN producto de CADA una de estas categorías: LIMPIEZA, TÓNICO, SÉRUM o ESENCIA, CREMA o GEL, SOLAR. Sin excepción.
+2. Si el nivel es principiante o el tiempo es menos de 5 min: recomienda 5 productos (uno por categoría esencial).
+3. Si el nivel es intermedio o tiempo entre 5-15 min: recomienda 6-7 productos.
+4. Si el nivel es avanzado o tiempo más de 15 min: recomienda 7-8 productos (puedes agregar contorno de ojos y/o mascarilla).
+5. La rutina debe tener pasos en orden correcto: limpieza → tónico → sérum → crema → solar (AM). PM: limpieza → tónico → sérum → crema.
+6. Marca como "esencial" los productos de las 5 categorías base. Extra = "recomendado" o "complementario".
+${isRosacea ? '7. SOLO recomendar productos marcados APTO_ROSACEA.' : ''}
+
+JSON a responder (sin texto adicional):
 {
-  "skinEmoji":"emoji tipo piel",
-  "skinTypeName":"nombre tipo de piel en español",
-  "skinSummary":"resumen 2 oraciones qué significa para el cuidado",
-  "recommendations":[
-    {"productName":"nombre exacto del catálogo","priority":"esencial|recomendado|complementario","why":"1-2 oraciones por qué es ideal para ESTE perfil"}
+  "skinEmoji": "emoji representativo del tipo de piel",
+  "skinTypeName": "nombre del tipo de piel en español",
+  "skinSummary": "2 oraciones sobre qué significa este tipo de piel para el cuidado diario",
+  "recommendations": [
+    {
+      "productName": "nombre exacto del catálogo",
+      "priority": "esencial",
+      "why": "1-2 oraciones explicando por qué es ideal para ESTE perfil específico"
+    }
   ],
-  "routine":[
-    {"step":1,"time":"AM|PM|AM/PM","type":"categoría","product":"nombre exacto","tip":"consejo aplicación"}
+  "routine": [
+    {
+      "step": 1,
+      "time": "AM",
+      "type": "Limpieza",
+      "product": "nombre exacto del catálogo",
+      "tip": "consejo breve de aplicación"
+    }
   ],
-  "dermNote":"nota dermatológica 3-4 oraciones con consejos, ingredientes a buscar",
-  "warnings":"ingredientes o hábitos a evitar"
+  "dermNote": "3-4 oraciones con consejos dermatológicos específicos para este tipo de piel, ingredientes a buscar y hábitos clave",
+  "warnings": "ingredientes o hábitos específicos a evitar para este perfil"
+}`;
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        model: "claude-sonnet-4-20250514",
+        max_tokens: 1500,
+        messages: [{role: "user", content: prompt}]
+      })
+    });
+    const data = await res.json();
+    const txt = data.content.map(i => i.text || '').join('');
+    const clean = txt.replace(/```json|```/g, '').trim();
+    const parsed = JSON.parse(clean);
+
+    // Validate: ensure all 5 base categories are present, patch if missing
+    const neededCats = ['clean','toner','serum','cream','sun'];
+    const foundCats = new Set();
+    parsed.recommendations.forEach(rec => {
+      const prod = PRODUCTS.find(p => p.n === rec.productName);
+      if (prod) foundCats.add(prod.cat);
+    });
+
+    // Add missing categories via smart fallback
+    neededCats.forEach(cat => {
+      if (!foundCats.has(cat)) {
+        const fallbacks = getBestPerCategory(skinKey, concKey, isRosacea);
+        const missing = fallbacks.find(p => p.cat === cat);
+        if (missing) {
+          parsed.recommendations.push({
+            productName: missing.n,
+            priority: 'esencial',
+            why: `Complementa tu rutina como paso de ${missing.bt.toLowerCase()}, esencial para tu tipo de piel.`
+          });
+        }
+      }
+    });
+
+    renderResult(parsed);
+  } catch(e) {
+    console.error('AI error:', e);
+    renderFallback(skinKey, concKey, isRosacea);
+  }
 }
 
-Selecciona 4-7 recomendaciones y 4-6 pasos de rutina ajustados al tiempo disponible. Prioriza los más importantes.`;
-
-  try{
-    const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
-    const data=await res.json();
-    const txt=data.content.map(i=>i.text||'').join('');
-    const clean=txt.replace(/```json|```/g,'').trim();
-    renderResult(JSON.parse(clean));
-  }catch(e){renderFallback(skinKey,CONC_MAP[ans[1]]||'hidratacion');}
-}
-
+// ════════════════════════════════
+// RENDER
+// ════════════════════════════════
 function renderResult(r){
   document.getElementById('ai-loading').style.display='none';
   document.getElementById('ai-content').style.display='block';
-  document.getElementById('skin-profile').innerHTML=`<div class="skin-emoji-wrap">${r.skinEmoji}</div><div><h2>${r.skinTypeName}</h2><p>${r.skinSummary}</p></div>`;
-  const grid=document.getElementById('prod-grid');
-  grid.innerHTML='';
-  r.recommendations.forEach(rec=>{
-    const prod=PRODUCTS.find(p=>p.n===rec.productName);
-    if(!prod)return;
-    const pc=rec.priority==='esencial'?'p-esencial':rec.priority==='recomendado'?'p-recomendado':'p-complementario';
-    const pl=rec.priority==='esencial'?'★ Esencial':rec.priority==='recomendado'?'◎ Recomendado':'○ Complementario';
-    grid.innerHTML+=`<div class="prod-card"><span class="prod-badge ${prod.bl}">${prod.bt}</span><div class="prod-name">${prod.n}</div><div class="prod-why">💡 ${rec.why}</div><div class="prod-footer"><span class="prod-price">$${prod.p.toLocaleString('es-CL')}</span><span class="priority-label ${pc}">${pl}</span></div></div>`;
+
+  document.getElementById('skin-profile').innerHTML=`
+    <div class="skin-emoji-wrap">${r.skinEmoji}</div>
+    <div><h2>${r.skinTypeName}</h2><p>${r.skinSummary}</p></div>`;
+
+  const grid = document.getElementById('prod-grid');
+  grid.innerHTML = '';
+  r.recommendations.forEach(rec => {
+    const prod = PRODUCTS.find(p => p.n === rec.productName);
+    if (!prod) return;
+    const pc = rec.priority==='esencial'?'p-esencial':rec.priority==='recomendado'?'p-recomendado':'p-complementario';
+    const pl = rec.priority==='esencial'?'★ Esencial':rec.priority==='recomendado'?'◎ Recomendado':'○ Complementario';
+    grid.innerHTML += `
+      <div class="prod-card">
+        <span class="prod-badge ${prod.bl}">${prod.bt}</span>
+        <div class="prod-name">${prod.n}</div>
+        <div class="prod-why">💡 ${rec.why}</div>
+        <div class="prod-footer">
+          <span class="prod-price">$${prod.p.toLocaleString('es-CL')}</span>
+          <span class="priority-label ${pc}">${pl}</span>
+        </div>
+      </div>`;
   });
-  const rs=document.getElementById('routine-steps');
-  rs.innerHTML='';
-  r.routine.forEach(s=>{rs.innerHTML+=`<div class="routine-step"><div class="step-circle">${s.step}</div><div><div class="step-type">${s.time} · ${s.type}</div><div class="step-prod">${s.product}</div><div class="step-tip">${s.tip}</div></div></div>`;});
-  document.getElementById('derm-notes').innerHTML=`<p>${r.dermNote}</p>${r.warnings?`<div class="warn-box">⚠️ <strong>Evitar:</strong> ${r.warnings}</div>`:''}`;
+
+  const rs = document.getElementById('routine-steps');
+  rs.innerHTML = '';
+  r.routine.forEach(s => {
+    rs.innerHTML += `
+      <div class="routine-step">
+        <div class="step-circle">${s.step}</div>
+        <div>
+          <div class="step-type">${s.time} · ${s.type}</div>
+          <div class="step-prod">${s.product}</div>
+          <div class="step-tip">${s.tip}</div>
+        </div>
+      </div>`;
+  });
+
+  document.getElementById('derm-notes').innerHTML =
+    `<p>${r.dermNote}</p>${r.warnings ? `<div class="warn-box">⚠️ <strong>Evitar:</strong> ${r.warnings}</div>` : ''}`;
 }
 
-function renderFallback(sk,co){
-  const f=PRODUCTS.filter(p=>p.sk.includes(sk)&&p.co.includes(co)).slice(0,5);
-  renderResult({skinEmoji:'🌸',skinTypeName:'Tu perfil de piel',skinSummary:'Basado en tus respuestas, seleccionamos los productos más adecuados de Miseon.cl.',recommendations:f.map((p,i)=>({productName:p.n,priority:i<2?'esencial':'recomendado',why:'Ideal para tu tipo de piel y preocupaciones.'})),routine:f.slice(0,4).map((p,i)=>({step:i+1,time:'AM/PM',type:p.bt,product:p.n,tip:'Aplica con movimientos suaves, de dentro hacia afuera.'})),dermNote:'Recuerda siempre usar protector solar durante el día y ser constante con tu rutina. La K-beauty se basa en capas ligeras y paciencia.',warnings:'Evita cambiar muchos productos a la vez para no irritar la piel.'});
-}
+// ════════════════════════════════
+// SMART FALLBACK RENDER
+// ════════════════════════════════
+function renderFallback(skinKey, concKey, isRosacea){
+  const selected = getBestPerCategory(skinKey, concKey, isRosacea);
 
-// ── Calculator ──
-let sh='free',tblRows=[];
-function setSh(m){sh=m;document.getElementById('sb_free').classList.toggle('active',m==='free');document.getElementById('sb_std').classList.toggle('active',m==='std');calc();}
-const fmt=n=>'$'+Math.round(n).toLocaleString('es-CL');
-function costo(u,q,tc,ex){return(u*q+(sh==='std'?8:0))/q*tc+ex;}
-function precio(c,mg,fee){const d=1-fee/100-mg/100;return d<=0?c*3:c/d;}
-function calc(){
-  const tc=+document.getElementById('tc').value||950;
-  const u=+document.getElementById('c_usd').value||0;
-  const q=+document.getElementById('c_qty').value||1;
-  const mg=+document.getElementById('c_mg').value||40;
-  const fee=+document.getElementById('c_fee').value||0;
-  const ex=+document.getElementById('c_extra').value||0;
-  const c=costo(u,q,tc,ex),p=precio(c,mg,fee),com=p*fee/100,g=p-c-com,mr=p>0?g/p*100:0;
-  document.getElementById('r_c').textContent=fmt(c);
-  document.getElementById('r_p').textContent=fmt(p);
-  document.getElementById('r_g').textContent=fmt(g);
-  document.getElementById('r_mr').textContent=mr.toFixed(1)+'%';
-  document.getElementById('r_min').textContent=fmt(c/(1-fee/100));
-  document.getElementById('r_tot').textContent=fmt(g*q);
-  const tot=c+com+g;
-  if(tot>0){document.getElementById('b_c').style.width=(c/tot*100).toFixed(1)+'%';document.getElementById('b_f').style.width=(com/tot*100).toFixed(1)+'%';document.getElementById('b_g').style.width=Math.max(0,g/tot*100).toFixed(1)+'%';}
-  const pl=fee===0?'Facebook Marketplace':'esta plataforma';
-  document.getElementById('r_recom').innerHTML=mr<15?`⚠️ Margen <strong>${mr.toFixed(1)}%</strong> muy ajustado. Sube a al menos 30%.`:mr<30?`📌 Margen <strong>${mr.toFixed(1)}%</strong> en ${pl}. Apunta a 35–40% para crecer cómodo.`:`✅ ¡Excelente! <strong>${mr.toFixed(1)}%</strong> en ${pl}. Precio: <strong>${fmt(p)}</strong> 🚀`;
-  renderTbl();
-}
-function addRow(){tblRows.push({n:'Producto '+(tblRows.length+1),u:10,q:1});renderTbl();}
-function renderTbl(){
-  const tc=+document.getElementById('tc').value||950,mg=+document.getElementById('c_mg').value||40,fee=+document.getElementById('c_fee').value||0,ex=+document.getElementById('c_extra').value||0;
-  const u=+document.getElementById('c_usd').value||0,q=+document.getElementById('c_qty').value||1;
-  const c0=costo(u,q,tc,ex),p0=precio(c0,mg,fee),g0=p0-c0-p0*fee/100;
-  let h=`<tr style="background:rgba(242,196,206,0.08)"><td><strong style="color:var(--blush-deep)">★ Actual</strong></td><td>${u.toFixed(2)}</td><td>${q}</td><td>${fmt(c0)}</td><td style="color:var(--blush-deep);font-weight:600">${fmt(p0)}</td><td style="color:var(--sage-deep);font-weight:600">${fmt(g0)}</td><td></td></tr>`;
-  tblRows.forEach((r,i)=>{const ci=costo(r.u,r.q,tc,ex),pi=precio(ci,mg,fee),gi=pi-ci-pi*fee/100;h+=`<tr><td><input style="background:none;border:none;color:var(--text);font-size:0.8rem;width:110px;font-family:'Quicksand',sans-serif" value="${r.n}" onchange="tblRows[${i}].n=this.value"></td><td><input type="number" style="background:none;border:none;color:var(--blush-deep);font-size:0.8rem;width:52px;font-family:'Quicksand',sans-serif" value="${r.u}" min="0" step="0.5" onchange="tblRows[${i}].u=+this.value||0;renderTbl()"></td><td><input type="number" style="background:none;border:none;color:var(--text);font-size:0.8rem;width:32px;font-family:'Quicksand',sans-serif" value="${r.q}" min="1" onchange="tblRows[${i}].q=+this.value||1;renderTbl()"></td><td>${fmt(ci)}</td><td style="color:var(--blush-deep);font-weight:600">${fmt(pi)}</td><td style="color:var(--sage-deep);font-weight:600">${fmt(gi)}</td><td><button class="btn-del-row" onclick="tblRows.splice(${i},1);renderTbl()">✕</button></td></tr>`;});
-  document.getElementById('tbl_body').innerHTML=h;
+  const skinNames = {
+    grasa:'Piel Grasa', seca:'Piel Seca', mixta:'Piel Mixta',
+    normal:'Piel Normal', sensible:'Piel Sensible', rosacea:'Piel con Rosácea'
+  };
+  const skinEmojis = {
+    grasa:'✨', seca:'🌵', mixta:'☯️', normal:'🌸', sensible:'🌡️', rosacea:'🌹'
+  };
+  const skinSummaries = {
+    grasa:'Tu piel produce exceso de sebo y tiende a brillar. Necesitas productos ligeros, no comedogénicos, que controlen el brillo y mantengan los poros limpios sin resecar.',
+    seca:'Tu piel tiene poca producción de sebo y puede sentirse tirante. Necesitas hidratación profunda y productos que refuercen la barrera cutánea.',
+    mixta:'Tienes una zona T grasa y mejillas normales o secas. Tu rutina debe equilibrar ambas zonas sin agravar ninguna.',
+    normal:'Tu piel está bien equilibrada. El objetivo es mantenerla hidratada, protegida y prevenir el envejecimiento prematuro.',
+    sensible:'Tu piel reacciona fácilmente a ingredientes activos. Prioriza fórmulas calmantes, sin fragancia y con ingredientes como Centella Asiática o Pantenol.',
+    rosacea:'Tu piel necesita productos especialmente formulados para calmar la inflamación y el enrojecimiento. Evita activos irritantes y prioriza Centella Asiática y Pantenol.'
+  };
+
+  const catRoutineInfo = {
+    clean:{time:'AM/PM', type:'Limpieza', tip:'Masajea suavemente por 30 segundos con agua tibia y enjuaga bien.'},
+    toner:{time:'AM/PM', type:'Tónico', tip:'Aplica con las manos o algodón dando pequeños golpecitos. No frotar.'},
+    serum:{time:'AM/PM', type:'Sérum', tip:'Unas pocas gotas, presiona suavemente contra la piel hasta absorber.'},
+    cream:{time:'AM/PM', type:'Hidratante', tip:'Aplica en capa ligera con movimientos hacia arriba. Siempre el último paso antes del solar.'},
+    sun:{time:'AM', type:'Protector Solar', tip:'Aplica como último paso en la mañana. Reaplicar cada 2 horas si estás al sol.'}
+  };
+
+  const routine = selected.map((prod, i) => ({
+    step: i + 1,
+    time: catRoutineInfo[prod.cat]?.time || 'AM/PM',
+    type: catRoutineInfo[prod.cat]?.type || prod.bt,
+    product: prod.n,
+    tip: catRoutineInfo[prod.cat]?.tip || 'Aplica con movimientos suaves de dentro hacia afuera.'
+  }));
+
+  const dermNotes = {
+    grasa: 'Usa doble limpieza: aceite primero, luego espuma. Busca ingredientes como Niacinamida, Ácido Salicílico (BHA) y Té Verde. El sol empeora el acné y los poros — el protector solar es obligatorio.',
+    seca: 'Evita limpiadores con sulfatos fuertes. Busca Ácido Hialurónico, Ceramidas y Pantenol. Aplica los productos sobre piel ligeramente húmeda para sellar mejor la humedad.',
+    mixta: 'Aplica productos más ricos en mejillas y más ligeros en zona T. La Niacinamida es perfecta porque equilibra ambas zonas. No omitas el hidratante aunque tengas la zona T grasa.',
+    normal: 'Mantén tu rutina constante: limpieza, hidratación y protector solar todos los días. Incorpora un sérum antioxidante como vitamina C o Niacinamida para prevenir manchas.',
+    sensible: 'Introduce nuevos productos de a uno y espera 2 semanas antes de agregar otro. Busca fórmulas sin fragancia, sin alcohol y con Centella Asiática. Siempre haz patch test.',
+    rosacea: 'La rosácea requiere paciencia y consistencia. Usa SIEMPRE agua fría o tibia — nunca caliente. Evita el sol directo, el alcohol y las comidas muy picantes. El protector solar mineral es tu mejor aliado.'
+  };
+
+  const warnings = {
+    grasa: 'Aceites pesados, cremas muy ricas, productos con aceite mineral. Evita tocar la cara con las manos.',
+    seca: 'Limpiadores con jabón o sulfatos fuertes, alcohol en productos, agua muy caliente al lavar.',
+    mixta: 'Productos muy ricos en toda la cara. Aplica los más pesados solo donde se necesitan.',
+    normal: 'Sobrecargar la piel con demasiados activos a la vez. Introducir nuevos productos gradualmente.',
+    sensible: 'Fragancia, alcohol, retinol, AHA/BHA en concentraciones altas, cambios bruscos de temperatura.',
+    rosacea: 'Retinol, AHA, BHA, alcohol, fragancia, limpiadores agresivos, agua caliente, sol sin protección.'
+  };
+
+  renderResult({
+    skinEmoji: skinEmojis[skinKey] || '🌸',
+    skinTypeName: skinNames[skinKey] || 'Tu tipo de piel',
+    skinSummary: skinSummaries[skinKey] || 'Rutina seleccionada especialmente para tu perfil de piel.',
+    recommendations: selected.map((prod, i) => ({
+      productName: prod.n,
+      priority: i < 3 ? 'esencial' : 'recomendado',
+      why: `${prod.d}`
+    })),
+    routine,
+    dermNote: dermNotes[skinKey] || 'Sé constante con tu rutina y siempre usa protector solar. La K-beauty se basa en capas ligeras y paciencia.',
+    warnings: warnings[skinKey] || 'Evita cambiar muchos productos a la vez para no irritar la piel.'
+  });
 }
 
 // ── Inventory ──
 function renderInv(){
-  const cats=[{k:'clean',l:'🧼 Limpieza'},{k:'sun',l:'☀️ Protección Solar'},{k:'serum',l:'✨ Sérums y Esencias'},{k:'cream',l:'🍦 Cremas y Humectantes'},{k:'toner',l:'💧 Tónicos y Brumas'},{k:'eye',l:'👀 Ojos y Contorno'},{k:'mask',l:'🧖 Mascarillas'}];
-  const el=document.getElementById('inv-container');
-  el.innerHTML='';
-  cats.forEach(cat=>{
-    const ps=PRODUCTS.filter(p=>p.cat===cat.k);
-    if(!ps.length)return;
-    el.innerHTML+=`<div class="card"><div class="inv-header">${cat.l}</div><div class="prod-grid">${ps.map(p=>`<div class="prod-card"><span class="prod-badge ${p.bl}">${p.bt}</span><div class="prod-name">${p.n}</div><div class="prod-footer"><span class="prod-price">$${p.p.toLocaleString('es-CL')}</span><span style="font-size:0.65rem;color:var(--soft);text-transform:uppercase;letter-spacing:1px">${p.sk.join('·')}</span></div></div>`).join('')}</div></div>`;
+  const cats=[
+    {k:'clean',l:'🧼 Limpieza'},
+    {k:'sun',l:'☀️ Protección Solar'},
+    {k:'serum',l:'✨ Sérums y Esencias'},
+    {k:'cream',l:'🍦 Cremas y Humectantes'},
+    {k:'toner',l:'💧 Tónicos y Brumas'},
+    {k:'eye',l:'👀 Ojos y Contorno'},
+    {k:'mask',l:'🧖 Mascarillas'}
+  ];
+  const el = document.getElementById('inv-container');
+  el.innerHTML = '';
+  cats.forEach(cat => {
+    const ps = PRODUCTS.filter(p => p.cat === cat.k);
+    if (!ps.length) return;
+    el.innerHTML += `
+      <div class="card">
+        <div class="inv-header">${cat.l}</div>
+        <div class="prod-grid">
+          ${ps.map(p => `
+            <div class="prod-card">
+              <span class="prod-badge ${p.bl}">${p.bt}</span>
+              <div class="prod-name">${p.n}</div>
+              <div class="prod-footer">
+                <span class="prod-price">$${p.p.toLocaleString('es-CL')}</span>
+                <span style="font-size:0.65rem;color:var(--soft);text-transform:uppercase;letter-spacing:1px">${p.sk.join('·')}</span>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>`;
   });
 }
 
 // ── Copy ──
-function copyText(id,btn){
-  const txt=document.getElementById(id).textContent;
-  navigator.clipboard.writeText(txt).then(()=>{
-    btn.textContent='✅ ¡Copiado!';
+function copyText(id, btn){
+  const txt = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    btn.textContent = '✅ ¡Copiado!';
     btn.classList.add('copied');
-    setTimeout(()=>{btn.textContent='📋 Copiar texto';btn.classList.remove('copied');},2500);
+    setTimeout(() => {btn.textContent = '📋 Copiar texto'; btn.classList.remove('copied');}, 2500);
   });
 }
 
 // ── Tabs ──
-function showTab(id,el){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
+function showTab(id, el){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
   el.classList.add('active');
-  if(id==='inventory')renderInv();
-  if(id==='calc')calc();
+  if (id === 'inventory') renderInv();
 }
-
-calc();
 </script>
 </body>
 </html>
